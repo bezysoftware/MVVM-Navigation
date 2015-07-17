@@ -1,3 +1,5 @@
+![Logo](/art/logo.128x128.png)
+
 # MVVM-Navigation
 
 ## What?
