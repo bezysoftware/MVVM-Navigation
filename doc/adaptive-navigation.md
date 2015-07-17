@@ -42,16 +42,12 @@ What it basically comes down to is this:
 
 More on adaptive triggers here: http://www.c-sharpcorner.com/UploadFile/1ff178/adaptive-trigger-for-xaml-uap-dev/
 
-## Navigation interceptors
-
-The `PlatformNavigator` requires an array of `INavigationInterceptor`s to be provided. A `INavigationInterceptor` basically allows to control when a View navigation should actually happen, based on some condition. Currently there is one implementation in the library which can be used - `AdaptiveNavigationInterceptor`. When navigating to target Page, it looks for a `AdaptiveNavigationAttribute` and based on that determines whether View navigation should happen or not (but ViewModel navigation happens in either case).
-
 ## Second page
 
-Last thing you need to do is create `SecondPage` - inside of it you again use the `UserControl`. Then decorate this Page with `AdaptiveNavigationAttributeByWidth` attribute e.g.
+Last thing you need to do is create `SecondPage` - inside of it you again use the `UserControl`. Then decorate this Page with `AdaptiveNavigationByWidthAttribute` e.g.
 
 ```
-    [AdaptiveNavigationByWidthAttribute(MinWidth = 700)]
+    [AdaptiveNavigationByWidth(MinWidth = 700)]
     [AssociatedViewModel(typeof(SecondViewModel)]
     public partial class SecondPage : Page
     {
@@ -62,10 +58,18 @@ Last thing you need to do is create `SecondPage` - inside of it you again use th
     }
 ```
 
-`AdaptiveNavigationByWidthAttribute` inherits from `AdaptiveNavigationAttribute` and allows navigation based on the width of the Window. 
+`AdaptiveNavigationByWidthAttribute` inherits from `AdaptiveNavigationAttribute` and allows View navigation based on the width of the Window. 
 
 ## Realtime changes
 
 Much like the UAP `AdaptiveTrigger`, the current infrastructure allows the `PlatformNavigator` to listen to changes in the underlying condition modify the current View navigation stack on the fly. 
 
 For example, when you have a small window under 700px, navigate to the `NextViewModel`, `NextPage` is shown. However when you expand the width of the Window, the `NextPage` is removed from the View navigation stack and `MainPage` is displayed.
+
+## Navigation interceptors
+
+The way this is all done is via Navigation Interceptors - classes implementing `INavigationInterceptor` interface. These must be provided to the `PlatformNavigator` which works with them. A `INavigationInterceptor` basically allows to control when a View navigation should actually happen, based on some condition. Currently there is one implementation in the library which can be used - `AdaptiveNavigationInterceptor`. When navigating to target Page, it looks for a `AdaptiveNavigationAttribute` and based on that determines whether View navigation should happen or not (but ViewModel navigation happens in either case).
+
+It also hooks up to the given attribute instance and listens to changes in the underlying condition, marshalling generated events to the `PlatformNavigator`. 
+
+When you go back and the ViewModel is popped from the navigation stack, corresponding attribute instance is disposed and changes are no longer observed. 
