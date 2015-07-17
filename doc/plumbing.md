@@ -8,7 +8,7 @@ You need to have an implementation of `IApplicationFrameProvider` - it should co
 
 ## Register types in ServiceLocator
 
-The built-in implementation of `IViewModelLocator`, which is reponsible for ViewModel lookup uses a ServiceLocator under the hood. I recommend using some kind of IoC / DI framework (such as [Unity](https://unity.codeplex.com/) and hook it up to `ServiceLocator`. See the sample project for details.
+The built-in implementation of `IViewModelLocator`, which is reponsible for ViewModel lookup uses a ServiceLocator under the hood. I recommend using some kind of IoC / DI framework (such as [Unity](https://unity.codeplex.com/)) and hook it up to `ServiceLocator`. See the sample project for details.
 
 Or you can of course have a custom implementation of `IViewModelLocator`.
 
@@ -16,7 +16,7 @@ Or you can of course have a custom implementation of `IViewModelLocator`.
 
 There are four things needed in `App.xaml.cs` - persist state, restore state, clear state in case app started normally, perform initial navigation (typically to `MainPage`).
 
-Persist state when app is being suspended, restore in the OnActivated method (but only when it was terminated), clear state in OnLaunched method and perform initial navigation in the OnLaunched event. See the sample project for more code.
+Persist state when app is being suspended, restore in the `OnActivated` method (but only when it was terminated), clear state in `OnLaunched` method and perform initial navigation again in the `OnLaunched` event (no need to do navigation on `OnActivated`, the View stack is restored automatically). See the sample project for more code.
 
 In the future some wrapping of all this might be added. 
 
