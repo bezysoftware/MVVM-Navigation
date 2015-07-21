@@ -54,12 +54,13 @@ public interface IIn<TData>
 }
 ```
 
-and the `Activate` method gets invoked when you navigate to the given ViewModel. Read more [here](doc/view-lookup.md).
+and the `Activate` method gets invoked when you navigate to the given ViewModel. Read how to hook your views with viewmodels [here](doc/view-lookup.md).
 
 ## There is more?
 
-There are other cool features in the library. Specifically following two are noteble:
+There are other cool features in the library. Following are noteble:
 
+* ViewModel activation and deactivation - pass data to your ViewModels and let them gracefully deactivate or prevent deactivation altogether. Read more [here](doc/activation-deactivation.md). 
 * Automatic state persistance for tombstoning - the data you send between viewmodels when navigating is persisted and automatically restored. Read more [here](doc/state-persistence.md).
 * Adaptive platform navigation - when navigating to new viewmodel, you may not always want to navigate to new Page - e.g. on a larger screen you want to remain on the existing Page and only navigate to new Page when the size of the Window shrinks. Read more [here](doc/adaptive-navigation.md).
 
