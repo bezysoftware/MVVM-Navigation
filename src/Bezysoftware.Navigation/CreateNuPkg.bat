@@ -1,0 +1,1 @@
+nuget pack Bezysoftware.Navigation.csproj -Prop Configuration=Release

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Bezysoftware.Navigation</id>
+    <version>$version$</version>
+    <title>MVVM Navigation</title>
+    <authors>bezysoftware</authors>
+    <owners>bezysoftware</owners>
+    <licenseUrl>https://github.com/bezysoftware/MVVM-Navigation/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/bezysoftware/MVVM-Navigation</projectUrl>
+    <iconUrl>https://github.com/bezysoftware/MVVM-Navigation/raw/master/art/logo.128x128.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>MVVM Navigation framework for UAP.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright bezysoftware 2015</copyright>
+    <tags>MVVM UAP Navigation</tags>
+  </metadata>
+</package>
