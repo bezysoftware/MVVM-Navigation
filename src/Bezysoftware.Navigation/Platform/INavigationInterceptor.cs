@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Interface for interception of platform navigation. Implementing class can prevent navigation based on some condition as well as notify when this condition changes to reevaluate it.
+    /// </summary>
     public interface INavigationInterceptor
     {
         /// <summary>

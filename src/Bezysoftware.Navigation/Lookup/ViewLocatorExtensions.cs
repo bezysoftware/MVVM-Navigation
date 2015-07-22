@@ -3,6 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Extensions for <see cref="IViewLocator"/>
+    /// </summary>
     public static class ViewLocatorExtensions
     {
         /// <summary>

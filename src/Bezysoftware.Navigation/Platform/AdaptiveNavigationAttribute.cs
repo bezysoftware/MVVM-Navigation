@@ -38,6 +38,9 @@
         /// <returns></returns>
         public abstract bool ShouldNavigate();
 
+        /// <summary>
+        /// Raises <see cref="ConditionChanged"/> event.
+        /// </summary>
         protected void OnConditionChanged()
         {
             this.ConditionChanged?.Invoke(this, new TypeEventArgs(this.ViewType));

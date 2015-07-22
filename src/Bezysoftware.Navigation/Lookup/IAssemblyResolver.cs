@@ -4,6 +4,9 @@
     using System.Reflection;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Provides functionality to list assemblies which can be searched. 
+    /// </summary>
     public interface IAssemblyResolver
     {
         /// <summary>

@@ -1,5 +1,8 @@
 ﻿namespace Bezysoftware.Navigation.StatePersistence
 {
+    /// <summary>
+    /// Specifies type of state persistence behavior.
+    /// </summary>
     public enum StatePersistenceBehaviorType
     {
         /// <summary>
@@ -13,7 +16,7 @@
         StateOnly,
 
         /// <summary>
-        /// Nothing is persisted. This basically means that the navigation framework should completely ignore the navigation action
+        /// Nothing is persisted. This basically means that the navigation framework should completely ignore the navigation action.
         /// </summary>
         None
     }

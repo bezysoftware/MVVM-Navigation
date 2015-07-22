@@ -128,7 +128,7 @@
     <Compile Include="Platform\IApplicationFrameProvider.cs" />
     <Compile Include="Platform\INavigationInterceptor.cs" />
     <Compile Include="Platform\IPlatformNavigator.cs" />
-    <Compile Include="Lookup\DefaultViewLocator.cs" />
+    <Compile Include="Lookup\ViewLocator.cs" />
     <Compile Include="Lookup\ReflectionUtils.cs" />
     <Compile Include="Lookup\IViewLocator.cs" />
     <Compile Include="Lookup\IViewModelLocator.cs" />

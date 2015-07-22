@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ViewModelInstanceLocator which uses ServiceLocator
+    /// <see cref="IViewModelLocator"/> which uses ServiceLocator
     /// </summary>
     public class ViewModelServiceLocator : IViewModelLocator
     {
@@ -20,7 +20,7 @@
             return Task.FromResult(ServiceLocator.Current.GetInstance(viewModelType));
         }
 
-        public Type GetType(Type viewType)
+        public Type GetAssociatedViewModelType(Type viewType)
         {
             return viewType.GetTypeInfo().GetCustomAttribute<AssociatedViewModelAttribute>().ViewModel;
         }

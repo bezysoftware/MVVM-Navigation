@@ -4,12 +4,12 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The state persistor is responsible for saving the current state of viewmodels
+    /// The state persistor is responsible for saving the current state of viewmodels.
     /// </summary>
     public interface IStatePersistor
     {
         /// <summary>
-        /// Gets or sets the navigation path
+        /// Gets or sets the navigation path.
         /// </summary>
         string NavigationPath { get; set; }
 
@@ -32,7 +32,7 @@
         Task<List<State>> GetAllStatesAsync();
         
         /// <summary>
-        /// Sets state for the given ViewModel, if it implements <see cref="IStatefulViewModel{TState}"/>
+        /// Sets state for the given ViewModel, if it implements <see cref="IStatefulViewModel{TState}"/>.
         /// </summary>
         /// <param name="viewModel">The ViewModel.</param>
         /// <param name="state">The state.</param>
@@ -44,12 +44,12 @@
         Task SaveAsync();
 
         /// <summary>
-        /// Clear all states
+        /// Clear all states.
         /// </summary>
         void ClearAllStates();
 
         /// <summary>
-        /// Checks whether state is persisted
+        /// Checks whether state is persisted.
         /// </summary>
         Task<bool> ContainsStateAsync();
     }

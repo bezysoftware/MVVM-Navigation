@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Interface for looking up instances of ViewModels.
+    /// Interface for looking up ViewModels.
     /// </summary>
     public interface IViewModelLocator
     {
@@ -20,6 +20,6 @@
         /// </summary>
         /// <param name="viewType"></param>
         /// <returns></returns>
-        Type GetType(Type viewType);
+        Type GetAssociatedViewModelType(Type viewType);
     }
 }

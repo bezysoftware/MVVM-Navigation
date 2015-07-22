@@ -3,12 +3,12 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extensions for ViewModel lookup
+    /// Extensions for <see cref="IViewModelLocator"/>
     /// </summary>
     public static class ViewModelLookupExtensions
     {
         /// <summary>
-        /// Finds and instance of the given ViewModel
+        /// Finds an instance of the given ViewModel
         /// </summary>
         /// <typeparam name="TViewModel"> Type of ViewModel</typeparam>
         /// <param name="locator"> The locator </param>

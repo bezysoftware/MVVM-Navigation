@@ -18,8 +18,6 @@
 
         private Frame frame;
 
-        public event EventHandler<CancelEventArgs> BackNavigationRequested;
-
         public PlatformNavigator(IApplicationFrameProvider frameProvider, IViewModelLocator viewModelLocator, IEnumerable<INavigationInterceptor> navigationInterceptors)
         {
             this.frameProvider = frameProvider;
@@ -32,6 +30,11 @@
                 interceptor.ConditionChanged += this.InterceptorConditionChanged;
             }
         }
+
+        /// <summary>
+        /// Raised when user hits the back button.
+        /// </summary>
+        public event EventHandler<CancelEventArgs> BackNavigationRequested;
 
         /// <summary>
         /// Checks whether navigator can go back.
@@ -64,7 +67,7 @@
         public void GoBack(Type currentViewModelType, Type associatedViewType)
         {
             var currentViewType = this.GetFrame().CurrentSourcePageType;
-            var shouldBeViewModelType = this.viewModelLocator.GetType(currentViewType);
+            var shouldBeViewModelType = this.viewModelLocator.GetAssociatedViewModelType(currentViewType);
 
             foreach (var interceptor in this.navigationInterceptors)
             {
@@ -80,12 +83,12 @@
         }
 
         /// <summary> 
-        /// The navigate.
+        /// Navigates to specified view. It should be a <see cref="Page"/>.
         /// </summary>
         /// <param name="viewType"> Type of View to navigate to. </param>
         public void Navigate(Type viewType)
         {
-            var vmType = this.viewModelLocator.GetType(viewType);
+            var vmType = this.viewModelLocator.GetAssociatedViewModelType(viewType);
 
             this.interceptedViewTypes.Add(viewType);
 
@@ -103,7 +106,7 @@
         }
 
         /// <summary>
-        /// Get current state of navigation serialized as a string
+        /// Get current state of navigation serialized as a string.
         /// </summary>
         /// <returns> Serialized navigation state. </returns>
         public string GetNavigationState()
@@ -171,7 +174,7 @@
             if (indexOfChangedType >= 0)
             {
                 var frame = this.GetFrame();
-                var vmType = this.viewModelLocator.GetType(e.Type);
+                var vmType = this.viewModelLocator.GetAssociatedViewModelType(e.Type);
                 var intercepted = this.InterceptNavigationForward(e.Type, vmType);
 
                 if (intercepted)

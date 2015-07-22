@@ -3,6 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Extensions for <see cref="INavigationService"/>
+    /// </summary>
     public static class NavigationServiceExtensions
     {
         /// <summary>

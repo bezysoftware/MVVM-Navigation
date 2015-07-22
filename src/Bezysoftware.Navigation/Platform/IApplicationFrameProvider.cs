@@ -2,6 +2,9 @@
 
 namespace Bezysoftware.Navigation.Platform
 {
+    /// <summary>
+    /// Interface for providing current application <see cref="Frame"/>.
+    /// </summary>
     public interface IApplicationFrameProvider
     {
         /// <summary>

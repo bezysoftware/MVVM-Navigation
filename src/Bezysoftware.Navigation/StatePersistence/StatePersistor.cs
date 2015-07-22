@@ -9,7 +9,7 @@
     using Windows.Storage;
 
     /// <summary>
-    /// The state persistor is responsible for saving the current state of viewmodels
+    /// The state persistor is responsible for saving the current state of viewmodels.
     /// </summary>
     public class StatePersistor : IStatePersistor
     {
@@ -27,7 +27,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the navigation path
+        /// Gets or sets the navigation path.
         /// </summary>
         public string NavigationPath
         {
@@ -36,7 +36,7 @@
         }
 
         /// <summary>
-        /// Checks whether state is persisted
+        /// Checks whether state is persisted.
         /// </summary>
         public Task<bool> ContainsStateAsync()
         {

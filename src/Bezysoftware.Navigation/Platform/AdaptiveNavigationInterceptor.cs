@@ -1,6 +1,5 @@
 ﻿namespace Bezysoftware.Navigation.Platform
 {
-    using Bezysoftware.Navigation.Lookup;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
@@ -34,7 +33,7 @@
         }
 
         /// <summary>
-        /// Start watching for changes in the underlying interception condition and raise <seealso cref="ConditionChanged"/> event when it happens.
+        /// Start watching for changes in the underlying interception condition and raise <see cref="ConditionChanged"/> event when it happens.
         /// </summary>
         /// <param name="viewType"> Type of View to watch. </param>
         public void HookType(Type viewType)
@@ -50,7 +49,7 @@
         }
 
         /// <summary>
-        /// Stop watching for changes in the underlying interception condition and stop raising <seealso cref="ConditionChanged"/> event.
+        /// Stop watching for changes in the underlying interception condition and stop raising <see cref="ConditionChanged"/> event.
         /// </summary>
         /// <param name="viewType"> Type of view to stopp watching. </param>
         public void UnhookType(Type viewType)

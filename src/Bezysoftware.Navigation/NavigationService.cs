@@ -19,7 +19,6 @@
         private readonly IViewModelLocator viewModelLocator;
         private readonly IViewLocator viewLocator;
         private readonly IStatePersistor statePersistor;
-        private readonly TaskScheduler uiTaskScheduler; // calls to underlying IPlatformNavigator need to be thru the uiTaskScheduler
         private readonly IPlatformNavigator platformNavigator;
 
         #endregion
@@ -37,12 +36,10 @@
             IViewLocator viewLocator, 
             IViewModelLocator viewModelLocator, 
             IStatePersistor statePersistor, 
-            IPlatformNavigator platformNavigator,
-            TaskScheduler uiTaskScheduler) 
+            IPlatformNavigator platformNavigator) 
         {
             this.viewModelLocator = viewModelLocator;
             this.viewLocator = viewLocator;
-            this.uiTaskScheduler = uiTaskScheduler;
             this.statePersistor = statePersistor;
             this.platformNavigator = platformNavigator;
 

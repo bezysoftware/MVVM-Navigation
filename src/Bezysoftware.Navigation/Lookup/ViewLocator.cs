@@ -8,15 +8,15 @@
     /// <summary>
     /// The default view locator which inspects all loaded assemblies.
     /// </summary>
-    public class DefaultViewLocator : IViewLocator
+    public class ViewLocator : IViewLocator
     {
         private readonly Dictionary<Type, Type> LookupCache;
         private readonly IAssemblyResolver assemblyResolver;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultViewLocator"/> class.
+        /// Initializes a new instance of the <see cref="ViewLocator"/> class.
         /// </summary>
-        public DefaultViewLocator(IAssemblyResolver assemblyResolver)
+        public ViewLocator(IAssemblyResolver assemblyResolver)
         {
             this.assemblyResolver = assemblyResolver;
 
