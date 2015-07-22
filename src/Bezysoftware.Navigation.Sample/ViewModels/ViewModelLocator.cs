@@ -4,6 +4,7 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
     using Bezysoftware.Navigation.Platform;
     using Bezysoftware.Navigation.Sample.AssemblyResolver;
     using Bezysoftware.Navigation.Sample.Dto;
+    using Bezysoftware.Navigation.Sample.Views;
     using Bezysoftware.Navigation.StatePersistence;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Ioc;
@@ -29,7 +30,7 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
 
             unity
                 .RegisterType<INavigationService, NavigationService>(new ContainerControlledLifetimeManager())
-                .RegisterType<IViewLocator, DefaultViewLocator>(new ContainerControlledLifetimeManager())
+                .RegisterType<IViewLocator, ViewLocator>(new ContainerControlledLifetimeManager())
                 .RegisterType<IStore, Store>(new ContainerControlledLifetimeManager())
                 .RegisterType<IViewModelLocator, ViewModelServiceLocator>(new ContainerControlledLifetimeManager())
                 .RegisterType<IPlatformNavigator, PlatformNavigator>(new ContainerControlledLifetimeManager())
@@ -42,6 +43,9 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
                 .RegisterType<MainViewModel>(new ContainerControlledLifetimeManager())
                 .RegisterType<SecondViewModel>(new ContainerControlledLifetimeManager())
                 .RegisterType<ThirdViewModel>(new ContainerControlledLifetimeManager());
+
+            // manually register association for the main page to speed up application startup
+            unity.Resolve<IViewLocator>().RegisterAssociation<MainViewModel, MainPage>();
         }
 
         public MainViewModel Main
