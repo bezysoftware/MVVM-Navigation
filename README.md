@@ -64,14 +64,12 @@ There are other cool features in the library. Following are noteble:
 * Automatic state persistance for tombstoning - the data you send between viewmodels when navigating is persisted and automatically restored. Read more [here](doc/state-persistence.md).
 * Adaptive platform navigation - when navigating to new viewmodel, you may not always want to navigate to new Page - e.g. on a larger screen you want to remain on the existing Page and only navigate to new Page when the size of the Window shrinks. Read more [here](doc/adaptive-navigation.md).
 
-## Plumbing
-
-There is some plumbing needed to make all this work. [This](doc/plumbing.md) page describes all steps you need to undertake when setting up new project.
-
-## Sample
-
-There is a sample project you can check out. 
-
 ## Where?
 
 Install-Package Bezysoftware.Universal.Navigation
+
+## How do I start?
+
+There is some plumbing needed to make all this work. [This](doc/plumbing.md) page describes all steps you need to undertake when setting up new project.
+
+You can also take a look at the sample project located [here](src/) (part of the main solution). 
