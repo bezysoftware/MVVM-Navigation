@@ -4,6 +4,8 @@ VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bezysoftware.Navigation", "Bezysoftware.Navigation\Bezysoftware.Navigation.csproj", "{33A60BA6-E2AC-43A5-BE9E-A082A34BC14B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bezysoftware.Navigation.Sample", "Bezysoftware.Navigation.Sample\Bezysoftware.Navigation.Sample.csproj", "{E85403BC-C922-475B-9DD1-046B0DCAC9C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,28 @@ Global
 		{33A60BA6-E2AC-43A5-BE9E-A082A34BC14B}.Release|x64.Build.0 = Release|x64
 		{33A60BA6-E2AC-43A5-BE9E-A082A34BC14B}.Release|x86.ActiveCfg = Release|x86
 		{33A60BA6-E2AC-43A5-BE9E-A082A34BC14B}.Release|x86.Build.0 = Release|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|Any CPU.Build.0 = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|Any CPU.Deploy.0 = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|ARM.Build.0 = Debug|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x64.ActiveCfg = Debug|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x64.Build.0 = Debug|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x64.Deploy.0 = Debug|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x86.ActiveCfg = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x86.Build.0 = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Debug|x86.Deploy.0 = Debug|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|Any CPU.ActiveCfg = Release|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|ARM.ActiveCfg = Release|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|ARM.Build.0 = Release|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|ARM.Deploy.0 = Release|ARM
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x64.ActiveCfg = Release|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x64.Build.0 = Release|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x64.Deploy.0 = Release|x64
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x86.ActiveCfg = Release|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x86.Build.0 = Release|x86
+		{E85403BC-C922-475B-9DD1-046B0DCAC9C9}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
