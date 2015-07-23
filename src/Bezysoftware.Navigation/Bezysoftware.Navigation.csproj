@@ -144,7 +144,7 @@
     <Compile Include="StatePersistence\StatePersistenceBehaviorType.cs" />
     <Compile Include="StatePersistence\StatePersistor.cs" />
     <Compile Include="StatePersistence\StateWrapper.cs" />
-    <Compile Include="UI\NavigateToViewModelAction.cs" />
+    <Compile Include="UI\NavigateToViewAction.cs" />
     <Compile Include="UI\TypeStringConverter.cs" />
   </ItemGroup>
   <ItemGroup>

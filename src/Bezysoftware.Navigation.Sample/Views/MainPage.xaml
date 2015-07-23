@@ -4,6 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Bezysoftware.Navigation.Sample.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:nav="using:Bezysoftware.Navigation.UI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding Main, Source={StaticResource Locator}}"
     mc:Ignorable="d">
@@ -39,7 +42,7 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        </VisualStateManager.VisualStateGroups>       
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
@@ -48,17 +51,22 @@
         
         <ListView ItemsSource="{Binding Groups}">
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Button Content="{Binding Name}" Command="{Binding ElementName=LayoutRoot, Path=DataContext.NavigateCommand}" CommandParameter="{Binding}" />
-                    <!--<TextBlock Text="{Binding Name}">
+                <DataTemplate >
+                    <TextBlock Text="{Binding Name}">
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
-                                <nav:NavigateToViewModelAction TargetViewModelKey="main" ActivationData="{Binding}" />
+                                <nav:NavigateToViewAction ActivationData="{Binding}" TargetViewType="local:SecondPage" />
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
-                    </TextBlock>-->
+                    </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
 
         <local:SecondControl Grid.Column="1" x:Name="secondControl" MinWidth="300" />

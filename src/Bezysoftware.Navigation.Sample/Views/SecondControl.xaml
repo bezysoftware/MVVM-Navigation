@@ -5,6 +5,9 @@
     xmlns:local="using:Bezysoftware.Navigation.Sample.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:nav="using:Bezysoftware.Navigation.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -17,9 +20,21 @@
         <ListView ItemsSource="{Binding Items}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding Header}" Command="{Binding ElementName=LayoutRoot, Path=DataContext.NavigateCommand}" CommandParameter="{Binding}" />
+                    <TextBlock Text="{Binding Header}">
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="Tapped">
+                                <core:InvokeCommandAction Command="{Binding ElementName=LayoutRoot, Path=DataContext.NavigateCommand}" CommandParameter="{Binding}" />
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                    </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
     </Grid>
 </UserControl>
