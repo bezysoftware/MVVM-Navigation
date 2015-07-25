@@ -66,7 +66,7 @@ There are other cool features in the library. Following are noteble:
 
 ## Where?
 
-`Install-Package Bezysoftware.Navigation`
+`Install-Package Bezysoftware.Navigation -Pre`
 
 ## How do I start?
 
