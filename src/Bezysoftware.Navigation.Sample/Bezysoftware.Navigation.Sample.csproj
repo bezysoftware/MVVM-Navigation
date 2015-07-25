@@ -162,6 +162,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Bezysoftware.Navigation.BackButton, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bezysoftware.Navigation.BackButton.0.0.2-beta\lib\win81\Bezysoftware.Navigation.BackButton.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.1.1.35049, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.1.1.0\lib\windows81\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>

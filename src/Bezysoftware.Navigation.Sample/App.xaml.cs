@@ -1,5 +1,6 @@
 ﻿namespace Bezysoftware.Navigation.Sample
 {
+    using Bezysoftware.Navigation.BackButton;
     using Bezysoftware.Navigation.Sample.ViewModels;
     using Bezysoftware.Navigation.StatePersistence;
     using Microsoft.Practices.ServiceLocation;
@@ -42,6 +43,8 @@
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
+
+                BackButtonManager.RegisterFrame(rootFrame, false);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
