@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>Bezysoftware.Navigation</id>
     <version>$version$</version>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/bezysoftware/MVVM-Navigation</projectUrl>
     <iconUrl>https://github.com/bezysoftware/MVVM-Navigation/raw/master/art/logo.128x128.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MVVM Navigation framework for UAP.</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <description>MVVM Navigation framework for UAP. It allows you to perform navigation directly in you ViewModels and pass data directly to them. It also easily handles state persistence and conditional navigation based on screen size.</description>
+    <releaseNotes>$releaseNotes$</releaseNotes>
     <copyright>Copyright bezysoftware 2015</copyright>
     <tags>MVVM UAP Navigation</tags>
   </metadata>
