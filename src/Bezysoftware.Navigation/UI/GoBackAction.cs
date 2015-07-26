@@ -1,17 +1,15 @@
 ﻿namespace Bezysoftware.Navigation.UI
 {
-    using System;
     using Microsoft.Xaml.Interactivity;
-    using Windows.UI.Xaml;
     using Microsoft.Practices.ServiceLocation;
-    using Bezysoftware.Navigation.Lookup;
     using System.Reflection;
     using System.Linq;
+    using Windows.UI.Xaml;
 
     public class GoBackAction : DependencyObject, IAction
     {
-        public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateToViewAction), new PropertyMetadata(null));
-        public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateToViewAction), new PropertyMetadata(null));
+        public static readonly DependencyProperty DeactivationDataProperty = DependencyProperty.Register("DeactivationData", typeof(object), typeof(GoBackAction), new PropertyMetadata(null));
+        public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(GoBackAction), new PropertyMetadata(null));
 
         /// <summary>
         /// The navigation service. If not provided, the instance is resolved using <see cref="ServiceLocator"/>.
@@ -25,25 +23,25 @@
         /// <summary>
         /// Data to pass to target ViewModel.
         /// </summary>
-        public object DectivationData
+        public object DeactivationData
         {
-            get { return (object)GetValue(ActivationDataProperty); }
-            set { SetValue(ActivationDataProperty, value); }
+            get { return (object)GetValue(DeactivationDataProperty); }
+            set { SetValue(DeactivationDataProperty, value); }
         }
         
         public object Execute(object sender, object parameter)
         {
             var service = this.GetNavigationService();
             
-            if (this.DectivationData == null)
+            if (this.DeactivationData == null)
             {
                 service.GoBack();
             }
             else
             {
                 var method = service.GetType().GetRuntimeMethods().First(m => m.Name == "GoBackAsync" && m.GetParameters().Count() == 1);
-                var generic = method.MakeGenericMethod(this.DectivationData.GetType());
-                generic.Invoke(service, new[] { this.DectivationData });
+                var generic = method.MakeGenericMethod(this.DeactivationData.GetType());
+                generic.Invoke(service, new[] { this.DeactivationData });
             }
 
             return true;
