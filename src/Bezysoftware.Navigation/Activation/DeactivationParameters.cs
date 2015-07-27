@@ -1,4 +1,4 @@
-﻿namespace Bezysoftware.Navigation
+﻿namespace Bezysoftware.Navigation.Activation
 {
     using System;
 

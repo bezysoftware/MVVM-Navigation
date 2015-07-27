@@ -1,5 +1,6 @@
 namespace Bezysoftware.Navigation.Sample.ViewModels
 {
+    using Bezysoftware.Navigation.Activation;
     using Bezysoftware.Navigation.Sample.Dto;
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;

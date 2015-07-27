@@ -1,5 +1,6 @@
 ﻿namespace Bezysoftware.Navigation.Sample.ViewModels
 {
+    using Bezysoftware.Navigation.Activation;
     using Bezysoftware.Navigation.Sample.Dto;
     using Bezysoftware.Navigation.StatePersistence;
 
@@ -7,7 +8,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using Windows.UI.Popups;    
+    using Windows.UI.Popups;
 
     [StatePersistenceBehavior(StatePersistenceBehaviorType.StateOnly)]
     public class ThirdViewModel : ViewModelBase, IActivate<Item>, IDeactivate, IDeactivateQuery, IStatefulViewModel<Item>

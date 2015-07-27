@@ -9,6 +9,8 @@
     using Bezysoftware.Navigation.Lookup;
     using Bezysoftware.Navigation.Platform;
     using Bezysoftware.Navigation.StatePersistence;
+    using Bezysoftware.Navigation.Activation;
+
 
     /// <summary>
     /// The navigation service.
@@ -81,13 +83,11 @@
                 if (activationData == null)
                 {
                     // TODO: when VM has StatePersistence set to None || StateOnly, this always gets called because activationData is set to null
-                    this.ActivateViewModel(viewModel, NavigationType.Forward);
+                    ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
                 }
                 else
                 {
-                    var method = this.GetType().GetRuntimeMethods().Where(m => m.Name == "Activate" && m.GetParameters().Count() == 2).First();
-                    var genericMethod = method.MakeGenericMethod(state.ActivationData.GetType());
-                    genericMethod.Invoke(this, new[] { viewModel, activationData });
+                    ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, activationData);
                 }
 
                 this.statePersistor.SetViewModelState(viewModel, vmState);
@@ -158,11 +158,11 @@
             // activate the ViewModel instance
             if (parameters.DeactivationData == null)
             {
-                this.ActivateViewModel(viewModel, NavigationType.Forward);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
             }
             else
             {
-                this.ActivateViewModel(viewModel, NavigationType.Forward, activationData);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, activationData);
             }
 
             // navigate to target View
@@ -195,11 +195,11 @@
             // activate the ViewModelInstance
             if (parameters.DeactivationData == null)
             {
-                this.ActivateViewModel(viewModel, NavigationType.Backward);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward);
             }
             else
             {
-                this.ActivateViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
             }
 
             // go back to previous View
@@ -239,7 +239,7 @@
                 foreach (var viewModelType in viewModelsToDeactivate)
                 {
                     var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
-                    if (!await this.CanDeactivateViewModelAsync(viewModel, navigationType, parameters))
+                    if (!await ViewModelActivator.CanDeactivateViewModelAsync(viewModel, navigationType, parameters))
                     {
                         return false;
                     }
@@ -249,7 +249,7 @@
                 foreach (var viewModelType in viewModelsToDeactivate)
                 {
                     var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
-                    await this.DeactivateViewModelAsync(viewModel, navigationType, parameters);
+                    await ViewModelActivator.DeactivateViewModelAsync(viewModel, navigationType, parameters);
                 }
 
                 if (navigationTypeOverriden)
@@ -267,49 +267,6 @@
             }
 
             return true;
-        }
-
-        private async Task<bool> CanDeactivateViewModelAsync(object target, NavigationType navigationType, DeactivationParameters parameters)
-        {
-            var query = target as IDeactivateQuery;
-            if (query != null)
-            {
-                if (!await query.CanDeactivateAsync(navigationType, parameters))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private async Task DeactivateViewModelAsync(object target, NavigationType navigationType, DeactivationParameters parameters)
-        {
-            var deactivate = target as IDeactivate;
-            if (deactivate != null)
-            {
-                await deactivate.DeactivateAsync(navigationType, parameters);
-            }
-        }
-
-        private void ActivateViewModel(object target, NavigationType navigationType)
-        {
-            var instance = target as IActivate;
-            if (instance != null)
-            {
-                instance.Activate(navigationType);
-            }
-        }
-
-        private void ActivateViewModel(object target, NavigationType navigationType, object data)
-        {
-            var ms = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethods();
-            var method = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethod("Activate", new[] { typeof(NavigationType), data.GetType() });
-
-            if (method != null)
-            {
-                method.Invoke(target, new[] { navigationType, data });
-            }
         }
 
         private async void PlatformBackNavigationRequested(object sender, System.ComponentModel.CancelEventArgs e)

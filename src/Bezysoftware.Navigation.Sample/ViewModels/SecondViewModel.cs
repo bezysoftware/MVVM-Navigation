@@ -6,6 +6,8 @@
     using Bezysoftware.Navigation.Sample.Dto;
     using System.Collections.ObjectModel;
     using GalaSoft.MvvmLight.Command;
+    using Windows.UI.Popups;
+    using Bezysoftware.Navigation.Activation;
 
     public class SecondViewModel : ViewModelBase, IActivate<Group>, IDeactivate
     {

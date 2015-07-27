@@ -1,5 +1,6 @@
 ﻿namespace Bezysoftware.Navigation
 {
+    using Bezysoftware.Navigation.Activation;
     using System;
     using System.Threading.Tasks;
 

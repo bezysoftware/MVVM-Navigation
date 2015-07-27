@@ -1,4 +1,4 @@
-﻿namespace Bezysoftware.Navigation
+﻿namespace Bezysoftware.Navigation.Activation
 {
     /// <summary>
     /// Denotes a ViewModel class which can be activated when navigated to.
