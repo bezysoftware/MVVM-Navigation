@@ -18,8 +18,7 @@
         /// </summary>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
         /// <param name="viewModelType"> Target ViewModel type. </typeparam>
-        /// <typeparam name="TData"> Type of data to be passed to target ViewModel. </typeparam>        
-        Task<bool> NavigateAsync<TData>(Type viewModelType, TData data);
+        Task<bool> NavigateAsync(Type viewModelType, object data);
 
         /// <summary>
         /// Navigate to a given ViewModel.
@@ -36,8 +35,7 @@
         /// Return control back to the previous ViewModel with the specified result data.
         /// </summary>
         /// <param name="result"> The result. </param>
-        /// <typeparam name="TData"> Type of the data to pass to previous ViewModel. </typeparam>
-        Task<bool> GoBackAsync<TData>(TData result);
+        Task<bool> GoBackAsync(object result);
 
         /// <summary>
         /// Persist current application state.

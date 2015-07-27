@@ -107,14 +107,14 @@
 
         #region Navigate
 
-        public async Task<bool> NavigateAsync<TData>(Type viewModelType, TData data)
+        public async Task<bool> NavigateAsync(Type viewModelType, object data)
         {
             return await this.NavigateAndActivateAsync(viewModelType, data);
         }
 
         public async Task<bool> NavigateAsync(Type viewModelType)
         {
-            return await this.NavigateAndActivateAsync(viewModelType, (object)null);
+            return await this.NavigateAndActivateAsync(viewModelType, null);
         }
 
         #endregion
@@ -126,7 +126,7 @@
         /// </summary>
         public async Task<bool> GoBackAsync()
         {
-            return await this.GoBackAndActivateAsync((object)null);
+            return await this.GoBackAndActivateAsync(null);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@
         /// </summary>
         /// <param name="data"> The result. </param>
         /// <typeparam name="TData"> Type of the data. </typeparam> 
-        public async Task<bool> GoBackAsync<TData>(TData data) 
+        public async Task<bool> GoBackAsync(object data) 
         {
             return await this.GoBackAndActivateAsync(data);
         }
@@ -143,7 +143,7 @@
 
         #region Private methods
 
-        private async Task<bool> NavigateAndActivateAsync<TData>(Type viewModelType, TData activationData)
+        private async Task<bool> NavigateAndActivateAsync(Type viewModelType, object activationData)
         {
             var parameters = new DeactivationParameters(viewModelType, activationData);
 
@@ -177,10 +177,10 @@
             return true;
         }
         
-        private async Task<bool> GoBackAndActivateAsync<TData>(TData activationData)
+        private async Task<bool> GoBackAndActivateAsync(object deactivationData)
         {
             var nextState = (await this.statePersistor.GetAllStatesAsync()).Select(s => s).Reverse().Skip(1).First();
-            var parameters = new DeactivationParameters(nextState.ViewModelType, activationData);
+            var parameters = new DeactivationParameters(nextState.ViewModelType, deactivationData);
 
             if (! await this.DeactivatePreviousViewModelsAsync(NavigationType.Backward, null, parameters))
             {
@@ -199,14 +199,14 @@
             }
             else
             {
-                this.ActivateViewModel(viewModel, NavigationType.Backward, activationData);
+                this.ActivateViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
             }
 
             // go back to previous View
             this.platformNavigator.GoBack(lastState.ViewModelType, lastViewType);
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, activationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, deactivationData));
 
             return true;
         }
@@ -301,12 +301,14 @@
             }
         }
 
-        private void ActivateViewModel<TData>(object target, NavigationType navigationType, TData data)
+        private void ActivateViewModel(object target, NavigationType navigationType, object data)
         {
-            var instance = target as IActivate<TData>;
-            if (instance != null)
+            var ms = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethods();
+            var method = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethod("Activate", new[] { typeof(NavigationType), data.GetType() });
+
+            if (method != null)
             {
-                instance.Activate(navigationType, data);
+                method.Invoke(target, new[] { navigationType, data });
             }
         }
 

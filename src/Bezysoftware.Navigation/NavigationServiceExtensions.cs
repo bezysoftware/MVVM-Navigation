@@ -52,9 +52,8 @@
         /// Navigate to a given ViewModel passing some data to it. This is a convenience method in case you don't care when the navigation finishes. If you do, use <see cref="NavigateAsync{TViewModel, TData}(INavigationService, TData)"/>
         /// </summary>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
-        /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>
-        /// <typeparam name="TData"> Type of data to be passed to target ViewModel </typeparam>        
-        public static void Navigate<TData>(this INavigationService service, Type viewModelType, TData data)
+        /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>        
+        public static void Navigate(this INavigationService service, Type viewModelType, object data)
         {
             service.NavigateAsync(viewModelType, data);
         }
@@ -81,7 +80,7 @@
         /// </summary>
         /// <param name="result"> The result. </param>
         /// <typeparam name="TData"> Type of the data to pass to previous ViewModel </typeparam>
-        public static void GoBack<TData>(this INavigationService service, TData result)
+        public static void GoBack(this INavigationService service, object result)
         {
             service.GoBackAsync(result);
         }

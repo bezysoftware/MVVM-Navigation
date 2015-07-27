@@ -57,9 +57,7 @@
             }
             else
             {
-                var method = service.GetType().GetRuntimeMethods().First(m => m.Name == "NavigateAsync" && m.GetParameters().Count() == 2);
-                var generic = method.MakeGenericMethod(this.ActivationData.GetType());
-                generic.Invoke(service, new[] { viewModelType, this.ActivationData });
+                service.Navigate(viewModelType, this.ActivationData);
             }
 
             return true;

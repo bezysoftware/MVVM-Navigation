@@ -39,9 +39,7 @@
             }
             else
             {
-                var method = service.GetType().GetRuntimeMethods().First(m => m.Name == "GoBackAsync" && m.GetParameters().Count() == 1);
-                var generic = method.MakeGenericMethod(this.DeactivationData.GetType());
-                generic.Invoke(service, new[] { this.DeactivationData });
+                service.GoBack(this.DeactivationData);
             }
 
             return true;
