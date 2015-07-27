@@ -42,7 +42,13 @@
         /// </summary>
         /// <returns> Serialized navigation state. </returns>
         string GetNavigationState();
-        
+
+        /// <summary>
+        /// Unhook intercepted type
+        /// </summary>
+        /// <param name="viewType"> Type of view. </param>
+        void UnhookType(Type viewType);
+
         /// <summary>
         /// Restores the navigation state.
         /// </summary>

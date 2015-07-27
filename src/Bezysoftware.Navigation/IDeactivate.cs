@@ -11,6 +11,6 @@
         /// This method is called when implementing class instance is navigated from.
         /// </summary>
         /// <param name="navigationType"> Type of navigation occurring. </param>
-        Task DeactivateAsync(NavigationType navigationType);
+        Task DeactivateAsync(NavigationType navigationType, DeactivationParameters parameters);
     }
 }

@@ -40,7 +40,7 @@
             }
         }
 
-        public async Task DeactivateAsync(NavigationType navigationType)
+        public async Task DeactivateAsync(NavigationType navigationType, DeactivationParameters parameters)
         {
             if (navigationType == NavigationType.Backward)
             {

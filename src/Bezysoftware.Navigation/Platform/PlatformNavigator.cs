@@ -145,6 +145,15 @@
             }
         }
 
+        public void UnhookType(Type viewType)
+        {
+            this.interceptedViewTypes.Remove(viewType);
+            foreach (var interceptor in this.navigationInterceptors)
+            {
+                interceptor.UnhookType(viewType);
+            }
+        }
+
         private Frame GetFrame()
         {
             if (frame == null)

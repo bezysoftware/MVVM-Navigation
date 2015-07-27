@@ -1,13 +1,14 @@
 ﻿namespace Bezysoftware.Navigation
 {
-    using Bezysoftware.Navigation.Lookup;
-    using Bezysoftware.Navigation.Platform;
-    using Bezysoftware.Navigation.StatePersistence;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
+
+    using Bezysoftware.Navigation.Lookup;
+    using Bezysoftware.Navigation.Platform;
+    using Bezysoftware.Navigation.StatePersistence;
 
     /// <summary>
     /// The navigation service.
@@ -95,16 +96,25 @@
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        /// Event raised when navigation happens.
+        /// </summary>
+        public event EventHandler<NavigationEventArgs> Navigated; 
+
+        #endregion
+
         #region Navigate
 
-        public async Task NavigateAsync<TData>(Type viewModelType, TData data)
+        public async Task<bool> NavigateAsync<TData>(Type viewModelType, TData data)
         {
-            await this.NavigateAndActivateAsync(viewModelType, vm => this.ActivateViewModel(vm, NavigationType.Forward, data), data);
+            return await this.NavigateAndActivateAsync(viewModelType, data);
         }
 
-        public async Task NavigateAsync(Type viewModelType)
+        public async Task<bool> NavigateAsync(Type viewModelType)
         {
-            await this.NavigateAndActivateAsync(viewModelType, vm => this.ActivateViewModel(vm, NavigationType.Forward), null);
+            return await this.NavigateAndActivateAsync(viewModelType, (object)null);
         }
 
         #endregion
@@ -114,9 +124,9 @@
         /// <summary>
         /// Return control back to the original ViewModel
         /// </summary>
-        public async Task GoBackAsync()
+        public async Task<bool> GoBackAsync()
         {
-            await this.GoBackAndActivateAsync(vm => this.ActivateViewModel(vm, NavigationType.Backward));
+            return await this.GoBackAndActivateAsync((object)null);
         }
 
         /// <summary>
@@ -124,109 +134,147 @@
         /// </summary>
         /// <param name="data"> The result. </param>
         /// <typeparam name="TData"> Type of the data. </typeparam> 
-        public async Task GoBackAsync<TData>(TData data) 
+        public async Task<bool> GoBackAsync<TData>(TData data) 
         {
-            await this.GoBackAndActivateAsync(vm => this.ActivateViewModel(vm, NavigationType.Backward, data));
+            return await this.GoBackAndActivateAsync(data);
         }
 
         #endregion
 
         #region Private methods
 
-        private async Task NavigateAndActivateAsync(Type viewModelType, Action<object> activationAction, object activationData)
+        private async Task<bool> NavigateAndActivateAsync<TData>(Type viewModelType, TData activationData)
         {
-            if (!await this.DeactivatePreviousViewModelsAsync(NavigationType.Forward, viewModelType))
+            var parameters = new DeactivationParameters(viewModelType, activationData);
+
+            if (!await this.DeactivatePreviousViewModelsAsync(NavigationType.Forward, viewModelType, parameters))
             {
-                return;
+                return false;
             }
 
             var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
             var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
 
             // activate the ViewModel instance
-            activationAction(viewModel);
+            if (parameters.DeactivationData == null)
+            {
+                this.ActivateViewModel(viewModel, NavigationType.Forward);
+            }
+            else
+            {
+                this.ActivateViewModel(viewModel, NavigationType.Forward, activationData);
+            }
 
             // navigate to target View
             this.platformNavigator.Navigate(viewType);
 
             // push state
             await this.statePersistor.PushStateAsync(viewModel, activationData, this.platformNavigator.GetNavigationState());
+
+            // raise navigated event
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, activationData));
+
+            return true;
         }
         
-        private async Task GoBackAndActivateAsync(Action<object> activationAction)
+        private async Task<bool> GoBackAndActivateAsync<TData>(TData activationData)
         {
-            if (! await this.DeactivatePreviousViewModelsAsync(NavigationType.Backward, null))
+            var nextState = (await this.statePersistor.GetAllStatesAsync()).Select(s => s).Reverse().Skip(1).First();
+            var parameters = new DeactivationParameters(nextState.ViewModelType, activationData);
+
+            if (! await this.DeactivatePreviousViewModelsAsync(NavigationType.Backward, null, parameters))
             {
-                return;
+                return false;
             }
-            
-            var lastState = await this.statePersistor.PopStateAsync();
-            var lastViewType = await this.viewLocator.GetViewTypeAsync(lastState.ViewModelType);
-            var nextState = (await this.statePersistor.GetAllStatesAsync()).Last();
+
             var viewModel = await this.viewModelLocator.GetInstanceAsync(nextState.ViewModelType);
             var viewType = await this.viewLocator.GetViewTypeAsync(nextState.ViewModelType);
+            var lastState = await this.statePersistor.PopStateAsync();
+            var lastViewType = await this.viewLocator.GetViewTypeAsync(lastState.ViewModelType);
 
             // activate the ViewModelInstance
-            activationAction(viewModel);
+            if (parameters.DeactivationData == null)
+            {
+                this.ActivateViewModel(viewModel, NavigationType.Backward);
+            }
+            else
+            {
+                this.ActivateViewModel(viewModel, NavigationType.Backward, activationData);
+            }
 
             // go back to previous View
             this.platformNavigator.GoBack(lastState.ViewModelType, lastViewType);
+
+            // raise navigated event
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, activationData));
+
+            return true;
         }
 
-        private async Task<bool> DeactivatePreviousViewModelsAsync(NavigationType navigationType, Type newViewModelType)
+        private async Task<bool> DeactivatePreviousViewModelsAsync(NavigationType navigationType, Type newViewModelTypeOverride, DeactivationParameters parameters)
         {
             IEnumerable<State> stack = await this.statePersistor.GetAllStatesAsync();
+            bool navigationTypeOverriden = false;
+
             if (stack.Count() > 0)
             {
-                var toDeactivate = stack
-                    .SkipWhile(i => i.ViewModelType != newViewModelType)
+                var viewModelsToDeactivate = stack
+                    .SkipWhile(i => i.ViewModelType != newViewModelTypeOverride)
                     .Select(i => i.ViewModelType)
                     .Reverse()
                     .ToList();
 
-                if (toDeactivate.Count == 0)
+                if (viewModelsToDeactivate.Count == 0)
                 {
-                    toDeactivate.Add(stack.Last().ViewModelType);
+                    viewModelsToDeactivate.Add(stack.Last().ViewModelType);
                 }
                 else
                 {
                     // target ViewModel already exists on the stack, meaning from the perspective of the existing ViewModels, the navigation is going back
                     navigationType = NavigationType.Backward;
-
-                    // pop the extra ViewModels from the stack
-                    foreach (var _ in toDeactivate)
-                    {
-                        await this.statePersistor.PopStateAsync();
-                    }
+                    navigationTypeOverriden = true;
                 }
 
                 // first check if all can deactivate
-                foreach (var viewModelType in toDeactivate)
+                foreach (var viewModelType in viewModelsToDeactivate)
                 {
                     var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
-                    if (!await this.CanDeactivateViewModelAsync(viewModel, navigationType))
+                    if (!await this.CanDeactivateViewModelAsync(viewModel, navigationType, parameters))
                     {
                         return false;
                     }
                 }
 
                 // if all can deactivate, do so
-                foreach (var viewModelType in toDeactivate)
+                foreach (var viewModelType in viewModelsToDeactivate)
                 {
                     var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
-                    await this.DeactivateViewModelAsync(viewModel, navigationType);
+                    await this.DeactivateViewModelAsync(viewModel, navigationType, parameters);
+                }
+
+                if (navigationTypeOverriden)
+                {
+                    foreach (var viewModelType in viewModelsToDeactivate)
+                    {
+                        // pop the extra ViewModels from the persistence stack
+                        await this.statePersistor.PopStateAsync();
+
+                        // when navigating forward to existing ViewModel (large screen with the first View visible) we must manually unhook existing ViewTypes, since they are no longer active
+                        var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
+                        this.platformNavigator.UnhookType(viewType);
+                    }
                 }
             }
 
             return true;
         }
 
-        private async Task<bool> CanDeactivateViewModelAsync(object target, NavigationType navigationType)
+        private async Task<bool> CanDeactivateViewModelAsync(object target, NavigationType navigationType, DeactivationParameters parameters)
         {
             var query = target as IDeactivateQuery;
             if (query != null)
             {
-                if (!await query.CanDeactivateAsync(navigationType))
+                if (!await query.CanDeactivateAsync(navigationType, parameters))
                 {
                     return false;
                 }
@@ -235,12 +283,12 @@
             return true;
         }
 
-        private async Task DeactivateViewModelAsync(object target, NavigationType navigationType)
+        private async Task DeactivateViewModelAsync(object target, NavigationType navigationType, DeactivationParameters parameters)
         {
             var deactivate = target as IDeactivate;
             if (deactivate != null)
             {
-                await deactivate.DeactivateAsync(navigationType);
+                await deactivate.DeactivateAsync(navigationType, parameters);
             }
         }
 

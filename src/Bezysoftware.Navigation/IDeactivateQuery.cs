@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="navigationType"> Type of navigation, forward or backward. </param>
         /// <returns> Whether deactivation can happen. </returns>
-        Task<bool> CanDeactivateAsync(NavigationType navigationType);
+        Task<bool> CanDeactivateAsync(NavigationType navigationType, DeactivationParameters parameters);
     }
 }

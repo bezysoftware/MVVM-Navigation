@@ -119,6 +119,7 @@
     <Compile Include="Lookup\NullAssemblyResolver.cs" />
     <Compile Include="Lookup\ViewLocatorExtensions.cs" />
     <Compile Include="Lookup\ViewModelLookupExtensions.cs" />
+    <Compile Include="NavigationEventArgs.cs" />
     <Compile Include="NavigationServiceExtensions.cs" />
     <Compile Include="NavigationType.cs" />
     <Compile Include="Platform\AdaptiveNavigationAttribute.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="StatePersistence\StatePersistenceBehaviorType.cs" />
     <Compile Include="StatePersistence\StatePersistor.cs" />
     <Compile Include="StatePersistence\StateWrapper.cs" />
+    <Compile Include="DeactivationParameters.cs" />
     <Compile Include="UI\GoBackAction.cs" />
     <Compile Include="UI\NavigateToViewAction.cs" />
   </ItemGroup>
