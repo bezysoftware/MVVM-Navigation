@@ -8,13 +8,13 @@ Navigation framework to allow true MVVM-like navigation in UAP (Universal App Pl
 ## Why?
 
 Platform API supports only navigating to target Page type:
-```
+```csharp
 frame.Navigate(typeof(NewPage));
 ```
 
 optionally passing in simple parameters:
 
-```
+```csharp
 frame.Navigate(typeof(NewPage), userId);
 ```
 
@@ -30,19 +30,19 @@ You also have to manually take care of persisting and restoring your state to su
 
 With the MVMM Navigation you can just write something like this:
 
-```
+```csharp
 navigationService.Navigate<NewViewModel>();
 ```
 
 optionally passing even complex parameters:
 
-```
+```csharp
 navigationService.Navigate<NewViewModel, User>(new User { Id = 42 });
 ```
 
 The `NewViewModel` just needs to implement the corresponding interface:
 
-```
+```csharp
 public interface IActivate
 {
   void Activate();
