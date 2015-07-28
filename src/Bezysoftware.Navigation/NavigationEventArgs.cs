@@ -4,10 +4,10 @@
 
     public class NavigationEventArgs : EventArgs
     {
-        private readonly object ActivationData;
-        private readonly NavigationType NavigationType;
-        private readonly Type ViewModelType;
-        private readonly Type ViewType;
+        public readonly object ActivationData;
+        public readonly NavigationType NavigationType;
+        public readonly Type ViewModelType;
+        public readonly Type ViewType;
 
         public NavigationEventArgs(NavigationType navigationType, Type viewModelType, Type viewType, object activationData)
         {
