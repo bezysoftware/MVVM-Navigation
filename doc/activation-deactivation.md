@@ -2,7 +2,7 @@
 
 Your viewmodels can be activated (when being navigated to) or deactivated (when being navigated from). There are 4 interfaces that your viewmodels can implement to achieve this:
 
-```
+```csharp
 public interface IActivate
 {
   void Activate(NavigationType navigationType);

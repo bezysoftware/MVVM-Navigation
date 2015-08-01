@@ -17,7 +17,7 @@ To do this, you need to do 2 things:
 
 What it basically comes down to is this:
 
-```
+```xaml
 ...
   <VisualStateManager.VisualStateGroups>
     <VisualStateGroup>
@@ -46,7 +46,7 @@ More on adaptive triggers here: http://www.c-sharpcorner.com/UploadFile/1ff178/a
 
 Last thing you need to do is create `SecondPage` - inside of it you again use the `UserControl`. Then decorate this Page with `AdaptiveNavigationByWidthAttribute` e.g.
 
-```
+```csharp
     [AdaptiveNavigationByWidth(MinWidth = 700)]
     [AssociatedViewModel(typeof(SecondViewModel)]
     public partial class SecondPage : Page
