@@ -1,12 +1,10 @@
 ﻿namespace Bezysoftware.Navigation.UI
 {
     using System;
-    using System.Reflection;
     using Microsoft.Xaml.Interactivity;
     using Windows.UI.Xaml;
     using Microsoft.Practices.ServiceLocation;
     using Bezysoftware.Navigation.Lookup;
-    using System.Linq;
 
 
 

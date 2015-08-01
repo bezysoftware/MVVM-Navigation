@@ -35,6 +35,8 @@
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
+            ViewModelLocator.Init();
+
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -44,7 +46,7 @@
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                BackButtonManager.RegisterFrame(rootFrame, false);
+                BackButtonManager.RegisterFrame(rootFrame, true, false, false);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {

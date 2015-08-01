@@ -162,17 +162,17 @@
             }
             else
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, activationData);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
             }
 
             // navigate to target View
             this.platformNavigator.Navigate(viewType);
 
             // push state
-            await this.statePersistor.PushStateAsync(viewModel, activationData, this.platformNavigator.GetNavigationState());
+            await this.statePersistor.PushStateAsync(viewModel, parameters.DeactivationData, this.platformNavigator.GetNavigationState());
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, activationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, parameters.DeactivationData));
 
             return true;
         }
@@ -206,7 +206,7 @@
             this.platformNavigator.GoBack(lastState.ViewModelType, lastViewType);
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, deactivationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, parameters.DeactivationData));
 
             return true;
         }

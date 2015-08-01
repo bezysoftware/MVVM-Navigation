@@ -2,8 +2,6 @@
 {
     using Microsoft.Xaml.Interactivity;
     using Microsoft.Practices.ServiceLocation;
-    using System.Reflection;
-    using System.Linq;
     using Windows.UI.Xaml;
 
     public class GoBackAction : DependencyObject, IAction

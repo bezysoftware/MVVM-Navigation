@@ -6,8 +6,6 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
     using Bezysoftware.Navigation.Sample.Dto;
     using Bezysoftware.Navigation.Sample.Views;
     using Bezysoftware.Navigation.StatePersistence;
-    using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.Ioc;
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
     using System.Collections.Generic;
@@ -22,7 +20,7 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
-        public ViewModelLocator()
+        static ViewModelLocator()
         {
             var unity = new UnityContainer();
 
@@ -47,6 +45,9 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
             // manually register association for the main page to speed up application startup
             unity.Resolve<IViewLocator>().RegisterAssociation<MainViewModel, MainPage>();
         }
+
+        public static void Init()
+        { }
 
         public MainViewModel Main
         {
