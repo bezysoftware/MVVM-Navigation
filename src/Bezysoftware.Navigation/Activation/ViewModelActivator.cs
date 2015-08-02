@@ -2,6 +2,7 @@
 {
     using System.Reflection;
     using System.Threading.Tasks;
+    using System.Linq;
 
     internal static class ViewModelActivator
     {
@@ -39,12 +40,14 @@
 
         public static void ActivateViewModel(object target, NavigationType navigationType, object data)
         {
-            var ms = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethods();
-            var method = typeof(IActivate<>).MakeGenericType(data.GetType()).GetRuntimeMethod("Activate", new[] { typeof(NavigationType), data.GetType() });
-
-            if (method != null)
+            if (target.GetType().GetInterfaces().Where(i => i.GetTypeInfo().IsGenericType).Select(i => i.GetGenericTypeDefinition()).Any(i => i.Equals(typeof(IActivate<>))))
             {
-                method.Invoke(target, new[] { navigationType, data });
+                var method = target.GetType().GetRuntimeMethod("Activate", new[] { typeof(NavigationType), data.GetType() });
+
+                if (method != null)
+                {
+                    method.Invoke(target, new[] { navigationType, data });
+                }
             }
         }
 

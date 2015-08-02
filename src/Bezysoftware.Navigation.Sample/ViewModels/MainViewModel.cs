@@ -20,14 +20,6 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
             this.nav = nav;
 
             this.Groups = new ObservableCollection<Group>();
-            this.NavigateCommand = new RelayCommand<Group>(g => this.nav.Navigate<SecondViewModel, Group>(g));
-        }
-
-
-        public RelayCommand<Group> NavigateCommand
-        {
-            get;
-            private set;
         }
 
         public ObservableCollection<Group> Groups
