@@ -25,6 +25,8 @@
             this.navigationInterceptors = navigationInterceptors;
             this.interceptedViewTypes = new List<Type>();
 
+            this.InterceptBackNavigation = true;
+
             foreach (var interceptor in this.navigationInterceptors)
             {
                 interceptor.ConditionChanged += this.InterceptorConditionChanged;
@@ -45,6 +47,15 @@
             {
                 return this.GetFrame().CanGoBack;
             }
+        }
+
+        /// <summary>
+        /// Indicates whether back button navigation should be handled. It set to false, it is the caller's responsibility to handle back button. Default value is true.
+        /// </summary>
+        public bool InterceptBackNavigation
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -156,21 +167,24 @@
 
         private Frame GetFrame()
         {
-            if (frame == null)
+            if (this.frame == null)
             {
-                frame = this.frameProvider.GetCurrentFrame();
+                this.frame = this.frameProvider.GetCurrentFrame();
                 SystemNavigationManager.GetForCurrentView().BackRequested += this.BackRequested;
             }
 
-            return frame;
+            return this.frame;
         }
 
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {
-            var canceelArgs = new CancelEventArgs();
-            this.BackNavigationRequested?.Invoke(sender, canceelArgs);
-            e.Handled = canceelArgs.Cancel;
-        }
+            if (this.InterceptBackNavigation)
+            {
+                var cancelArgs = new CancelEventArgs();
+                this.BackNavigationRequested?.Invoke(sender, cancelArgs);
+                e.Handled = cancelArgs.Cancel;
+            }
+        } 
 
         private bool InterceptNavigationForward(Type viewType, Type viewModelType)
         {
