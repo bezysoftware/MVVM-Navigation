@@ -216,7 +216,7 @@
             IEnumerable<State> stack = await this.statePersistor.GetAllStatesAsync();
             bool navigationTypeOverriden = false;
 
-            if (stack.Count() > 0)
+            if (stack.Any())
             {
                 var viewModelsToDeactivate = stack
                     .SkipWhile(i => i.ViewModelType != newViewModelTypeOverride)
@@ -261,7 +261,8 @@
 
                         // when navigating forward to existing ViewModel (large screen with the first View visible) we must manually unhook existing ViewTypes, since they are no longer active
                         var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
-                        this.platformNavigator.UnhookType(viewType);
+                        //this.platformNavigator.UnhookType(viewType);
+                        this.platformNavigator.GoBack(viewModelType, viewType);
                     }
                 }
             }
