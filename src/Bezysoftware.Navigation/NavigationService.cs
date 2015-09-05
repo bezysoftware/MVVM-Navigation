@@ -216,7 +216,7 @@
             IEnumerable<State> stack = await this.statePersistor.GetAllStatesAsync();
             bool navigationTypeOverriden = false;
 
-            if (stack.Count() > 0)
+            if (stack.Any())
             {
                 var viewModelsToDeactivate = stack
                     .SkipWhile(i => i.ViewModelType != newViewModelTypeOverride)
@@ -261,7 +261,8 @@
 
                         // when navigating forward to existing ViewModel (large screen with the first View visible) we must manually unhook existing ViewTypes, since they are no longer active
                         var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
-                        this.platformNavigator.UnhookType(viewType);
+                        //this.platformNavigator.UnhookType(viewType);
+                        this.platformNavigator.GoBack(viewModelType, viewType);
                     }
                 }
             }
@@ -271,14 +272,14 @@
 
         private async void PlatformBackNavigationRequested(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (this.platformNavigator.CanGoBack)
+            // there are still some ViewModels in the stack which can be deactivated
+            if ((await this.statePersistor.GetAllStatesAsync()).Count > 1)
             {
                 e.Cancel = true;
                 await this.GoBackAsync();
             }
             else
             {
-                // platform navigator cannot go back, which means there is just one page in the stack, allowing back navigation will deactivate the app
                 // TODO: DeactivateQuery
             }
         }

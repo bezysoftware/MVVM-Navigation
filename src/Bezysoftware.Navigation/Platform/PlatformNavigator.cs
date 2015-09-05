@@ -16,6 +16,8 @@
         private readonly IViewModelLocator viewModelLocator;
         private readonly List<Type> interceptedViewTypes;
 
+        private bool stateShouldBeEmpty;
+
         private Frame frame;
 
         public PlatformNavigator(IApplicationFrameProvider frameProvider, IViewModelLocator viewModelLocator, IEnumerable<INavigationInterceptor> navigationInterceptors)
@@ -77,6 +79,8 @@
         /// <param name="associatedViewType"> Type of View associated to current ViewModel type. /></param>
         public void GoBack(Type currentViewModelType, Type associatedViewType)
         {
+            this.stateShouldBeEmpty = false;
+
             var currentViewType = this.GetFrame().CurrentSourcePageType;
             var shouldBeViewModelType = this.viewModelLocator.GetAssociatedViewModelType(currentViewType);
 
@@ -89,6 +93,12 @@
 
             if (shouldBeViewModelType == currentViewModelType)
             {
+                if (!this.CanGoBack)
+                {
+                    this.stateShouldBeEmpty = true;
+                    return;
+                }
+
                 this.GetFrame().GoBack();
             }
         }
@@ -113,7 +123,18 @@
                 return;
             }
 
-            this.GetFrame().Navigate(viewType);
+            var frame = this.GetFrame();
+            frame.Navigate(viewType);
+
+            // in previous back navigation it was requested to completely wipe the backstack - but that cannot be done, so remove the last (zero index) page here.
+            if (this.stateShouldBeEmpty)
+            {
+                // this is a hack to trigger the OnNavigated event *after* the zero item on stack is removed.
+                frame.Navigate(viewType);
+                frame.BackStack.RemoveAt(0);
+                frame.GoBack();
+                this.stateShouldBeEmpty = false;
+            }
         }
 
         /// <summary>
