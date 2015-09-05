@@ -122,7 +122,6 @@
     <Compile Include="Activation\ViewModelActivator.cs" />
     <Compile Include="INavigationService.cs" />
     <Compile Include="Lookup\AssociatedViewModelAttribute.cs" />
-    <Compile Include="Lookup\CallingAssemblyResolver.cs" />
     <Compile Include="Lookup\GlobalAssemblyResolver.cs" />
     <Compile Include="Lookup\IAssemblyResolver.cs" />
     <Compile Include="Lookup\IViewLocator.cs" />
