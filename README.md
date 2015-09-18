@@ -73,3 +73,5 @@ There are other cool features in the library. Following are noteble:
 There is some plumbing needed to make all this work. [This](doc/plumbing.md) page describes all steps you need to undertake when setting up new project.
 
 You can also take a look at the sample project located [here](src/) (part of the main solution). 
+
+Also make sure to check out [MVVM Dialogs](https://github.com/bezysoftware/MVVM-Dialogs/) which builds on top of this package and intruduces a simple way to show dialogs from ViewModels. 
