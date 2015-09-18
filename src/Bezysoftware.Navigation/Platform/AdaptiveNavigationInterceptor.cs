@@ -25,7 +25,6 @@
         /// Intercept navigation to previous page
         /// </summary>
         /// <param name="targetViewType"> Type of page to navigate to. </param>
-        /// <param name="targetViewModelType"> Type of associated viewModel</param>
         /// <returns> True if the navigation was intercepted and should be cancelled. False if normal navigation should continue. </returns>
         public bool InterceptNavigation(Type targetViewType)
         {
