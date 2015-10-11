@@ -199,7 +199,7 @@
 
         private void BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (this.InterceptBackNavigation)
+            if (this.InterceptBackNavigation && !e.Handled)
             {
                 var cancelArgs = new CancelEventArgs();
                 this.BackNavigationRequested?.Invoke(sender, cancelArgs);
