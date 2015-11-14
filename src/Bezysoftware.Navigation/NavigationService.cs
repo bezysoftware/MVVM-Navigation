@@ -96,6 +96,19 @@
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets the type of the active ViewModel.
+        /// </summary>
+        public Type ActiveViewModelType
+        {
+            get;
+            private set;
+        } 
+
+        #endregion
+
         #region Events
 
         /// <summary>
@@ -171,6 +184,8 @@
             // push state
             await this.statePersistor.PushStateAsync(viewModel, parameters.DeactivationData, this.platformNavigator.GetNavigationState());
 
+            this.ActiveViewModelType = viewModelType;
+
             // raise navigated event
             this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, parameters.DeactivationData));
 
@@ -204,6 +219,8 @@
 
             // go back to previous View
             this.platformNavigator.GoBack(lastState.ViewModelType, lastViewType);
+
+            this.ActiveViewModelType = nextState.ViewModelType;
 
             // raise navigated event
             this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, parameters.DeactivationData));

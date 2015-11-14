@@ -14,6 +14,11 @@
         event EventHandler<NavigationEventArgs> Navigated;
 
         /// <summary>
+        /// Gets the type of the active ViewModel.
+        /// </summary>
+        Type ActiveViewModelType { get; }
+
+        /// <summary>
         /// Navigate to a given ViewModel passing some data to it.
         /// </summary>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
