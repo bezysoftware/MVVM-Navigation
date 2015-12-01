@@ -2,6 +2,7 @@
   "dependencies": {
     "Bezysoftware.Navigation.BackButton": "1.1.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "1.0.2",
     "MvvmLightLibs": "5.1.1",
     "Unity": "3.5.1405-prerelease"
   },
