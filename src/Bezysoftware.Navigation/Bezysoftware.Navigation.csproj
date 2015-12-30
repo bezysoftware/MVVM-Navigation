@@ -154,6 +154,8 @@
     <Compile Include="StatePersistence\StatePersistor.cs" />
     <Compile Include="StatePersistence\StateWrapper.cs" />
     <Compile Include="UI\GoBackAction.cs" />
+    <Compile Include="UI\NavigateCommand.cs" />
+    <Compile Include="UI\GoBackCommand.cs" />
     <Compile Include="UI\NavigateToViewAction.cs" />
     <Content Include="Properties\Bezysoftware.Navigation.rd.xml" />
   </ItemGroup>
