@@ -168,14 +168,14 @@
             var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
             var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
 
-            // activate the ViewModel instance
+            // activating the ViewModel instance
             if (parameters.DeactivationData == null)
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
+                ViewModelActivator.ActivatingViewModel(viewModel, NavigationType.Forward);
             }
             else
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
+                ViewModelActivator.ActivatingViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
             }
 
             // navigate to target View
@@ -188,6 +188,16 @@
 
             // raise navigated event
             this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, parameters.DeactivationData));
+
+            // activate the ViewModel instance
+            if (parameters.DeactivationData == null)
+            {
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
+            }
+            else
+            {
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
+            }
 
             return true;
         }
@@ -207,14 +217,14 @@
             var lastState = await this.statePersistor.PopStateAsync();
             var lastViewType = await this.viewLocator.GetViewTypeAsync(lastState.ViewModelType);
 
-            // activate the ViewModelInstance
+            // activating the ViewModelInstance
             if (parameters.DeactivationData == null)
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward);
+                ViewModelActivator.ActivatingViewModel(viewModel, NavigationType.Backward);
             }
             else
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
+                ViewModelActivator.ActivatingViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
             }
 
             // go back to previous View
@@ -224,6 +234,16 @@
 
             // raise navigated event
             this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, parameters.DeactivationData));
+
+            // activate the ViewModel instance
+            if (parameters.DeactivationData == null)
+            {
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
+            }
+            else
+            {
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
+            }
 
             return true;
         }

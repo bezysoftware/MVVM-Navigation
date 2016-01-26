@@ -51,5 +51,26 @@
             }
         }
 
+        public static void ActivatingViewModel(object target, NavigationType navigationType)
+        {
+            var instance = target as IActivating;
+            if (instance != null)
+            {
+                instance.Activating(navigationType);
+            }
+        }
+
+        public static void ActivatingViewModel(object target, NavigationType navigationType, object data)
+        {
+            if (target.GetType().GetInterfaces().Where(i => i.GetTypeInfo().IsGenericType).Select(i => i.GetGenericTypeDefinition()).Any(i => i.Equals(typeof(IActivating<>))))
+            {
+                var method = target.GetType().GetRuntimeMethod("Activating", new[] { typeof(NavigationType), data.GetType() });
+
+                if (method != null)
+                {
+                    method.Invoke(target, new[] { navigationType, data });
+                }
+            }
+        }
     }
 }

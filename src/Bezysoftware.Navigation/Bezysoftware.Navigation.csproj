@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\DeactivationParameters.cs" />
+    <Compile Include="Activation\IActivating.cs" />
     <Compile Include="Activation\IActivate.cs" />
     <Compile Include="Activation\IDeactivate.cs" />
     <Compile Include="Activation\IDeactivateQuery.cs" />

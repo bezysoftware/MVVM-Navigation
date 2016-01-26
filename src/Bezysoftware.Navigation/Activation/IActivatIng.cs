@@ -3,26 +3,26 @@
     /// <summary>
     /// Denotes a ViewModel class which can be activated when navigated to.
     /// </summary>
-    public interface IActivate
+    public interface IActivating
     {
         /// <summary>
-        /// This method is called after implementing class instance is navigated to.
+        /// This method is called before implementing class instance is navigated to. It is not called during state restoration.
         /// </summary>
         /// <param name="navigationType"> Type of navigation, forward or backward. </param>
-        void Activate(NavigationType navigationType);
+        void Activating(NavigationType navigationType);
     }
 
     /// <summary>
     /// Denotes a ViewModel class which can be activated with data when navigated to.
     /// </summary>
     /// <typeparam name="TData"> Type of data. </typeparam>
-    public interface IActivate<in TData>
+    public interface IActivating<in TData>
     {
         /// <summary>
-        /// This method is called after implementing class instance is navigated to with specified data type.
+        /// This method is called before implementing class instance is navigated to with specified data type. It is not called during state restoration.
         /// </summary>
         /// <param name="navigationType"> Type of navigation, forward or backward. </param>
         /// <param name="data"> The data. </param>
-        void Activate(NavigationType navigationType, TData data);
+        void Activating(NavigationType navigationType, TData data);
     }    
 }
