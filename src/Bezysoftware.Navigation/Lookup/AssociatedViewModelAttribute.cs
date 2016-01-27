@@ -6,7 +6,7 @@
     /// Links the View to a specific ViewModel. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class AssociatedViewModelAttribute : System.Attribute
+    public class AssociatedViewModelAttribute : Attribute
     {
         public readonly Type ViewModel;
 

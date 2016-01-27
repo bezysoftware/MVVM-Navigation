@@ -18,8 +18,8 @@
         /// </summary>
         public INavigationService NavigationService
         {
-            get { return (INavigationService)GetValue(NavigationServiceProperty); }
-            set { SetValue(NavigationServiceProperty, value); }
+            get { return (INavigationService)this.GetValue(NavigationServiceProperty); }
+            set { this.SetValue(NavigationServiceProperty, value); }
         }
 
         /// <summary>
@@ -27,8 +27,8 @@
         /// </summary>
         public object ActivationData
         {
-            get { return (object)GetValue(ActivationDataProperty); }
-            set { SetValue(ActivationDataProperty, value); }
+            get { return (object)this.GetValue(ActivationDataProperty); }
+            set { this.SetValue(ActivationDataProperty, value); }
         }
 
         public bool CanExecute(object parameter)

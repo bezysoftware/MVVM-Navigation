@@ -34,8 +34,7 @@
         /// <summary>
         /// Determines whether platform navigation should happen to target view
         /// </summary>
-        /// <param name="viewType"></param>
-        /// <returns></returns>
+        /// <returns> Whether navigation should occur. </returns>
         public abstract bool ShouldNavigate();
 
         /// <summary>

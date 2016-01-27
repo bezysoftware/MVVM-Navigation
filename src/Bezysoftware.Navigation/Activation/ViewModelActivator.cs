@@ -32,10 +32,8 @@
         public static void ActivateViewModel(object target, NavigationType navigationType)
         {
             var instance = target as IActivate;
-            if (instance != null)
-            {
-                instance.Activate(navigationType);
-            }
+
+            instance?.Activate(navigationType);
         }
 
         public static void ActivateViewModel(object target, NavigationType navigationType, object data)
@@ -44,20 +42,15 @@
             {
                 var method = target.GetType().GetRuntimeMethod("Activate", new[] { typeof(NavigationType), data.GetType() });
 
-                if (method != null)
-                {
-                    method.Invoke(target, new[] { navigationType, data });
-                }
+                method?.Invoke(target, new[] { navigationType, data });
             }
         }
 
         public static void ActivatingViewModel(object target, NavigationType navigationType)
         {
             var instance = target as IActivating;
-            if (instance != null)
-            {
-                instance.Activating(navigationType);
-            }
+
+            instance?.Activating(navigationType);
         }
 
         public static void ActivatingViewModel(object target, NavigationType navigationType, object data)
@@ -66,10 +59,7 @@
             {
                 var method = target.GetType().GetRuntimeMethod("Activating", new[] { typeof(NavigationType), data.GetType() });
 
-                if (method != null)
-                {
-                    method.Invoke(target, new[] { navigationType, data });
-                }
+                method?.Invoke(target, new[] { navigationType, data });
             }
         }
     }

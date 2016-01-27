@@ -14,7 +14,6 @@
         /// Returns all types which have an associated specified attribute
         /// </summary>
         /// <typeparam name="T"> Type of attribute </typeparam>
-        /// <returns> The <see cref="IEnumerable"/>. of Type and the attribute  </returns>
         public static IEnumerable<KeyValuePair<Type, T>> GetTypesWithAttribute<T>(IEnumerable<Assembly> assemblies)
             where T : Attribute
         {

@@ -14,8 +14,8 @@
         /// </summary>
         public INavigationService NavigationService
         {
-            get { return (INavigationService)GetValue(NavigationServiceProperty); }
-            set { SetValue(NavigationServiceProperty, value); }
+            get { return (INavigationService)this.GetValue(NavigationServiceProperty); }
+            set { this.SetValue(NavigationServiceProperty, value); }
         }
 
         /// <summary>
@@ -23,8 +23,8 @@
         /// </summary>
         public object DeactivationData
         {
-            get { return (object)GetValue(DeactivationDataProperty); }
-            set { SetValue(DeactivationDataProperty, value); }
+            get { return (object)this.GetValue(DeactivationDataProperty); }
+            set { this.SetValue(DeactivationDataProperty, value); }
         }
         
         public object Execute(object sender, object parameter)

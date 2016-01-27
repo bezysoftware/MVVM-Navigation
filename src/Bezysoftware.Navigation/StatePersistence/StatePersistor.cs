@@ -85,7 +85,9 @@
         /// <summary>
         /// Pushes the given state into storage. 
         /// </summary>
-        /// <param name="state"> The state data. </param>
+        /// <param name="viewModel"> The ViewModel that the state belongs to. </param>
+        /// <param name="activationData"> Data the ViewModel was activated with. </param>
+        /// <param name="navigationState"> The state of platform navigation. </param>
         public async Task PushStateAsync(object viewModel, object activationData, string navigationState)
         {
             var states = await this.GetAllStatesAsync();
@@ -138,7 +140,7 @@
 
         private Lazy<object> GetViewModelStateLazy(object viewModel)
         {
-            return IsViewModelStateful(viewModel)
+            return this.IsViewModelStateful(viewModel)
                 ? new Lazy<object>(() => viewModel.GetType().GetRuntimeProperty("State").GetValue(viewModel))
                 : new Lazy<object>(() => null);
         }
@@ -153,7 +155,7 @@
                 ActivationDataType = state.ActivationData?.GetType().AssemblyQualifiedName ?? string.Empty,
                 ViewModelState = JsonConvert.SerializeObject(vmState),
                 ViewModelStateType = vmState?.GetType().AssemblyQualifiedName ?? string.Empty,
-                ViewModelType = state.ViewModelType?.GetType().AssemblyQualifiedName ?? string.Empty
+                ViewModelType = state.ViewModelType?.AssemblyQualifiedName ?? string.Empty
             };
         }
 

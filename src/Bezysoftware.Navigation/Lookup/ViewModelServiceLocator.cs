@@ -13,8 +13,8 @@
         /// <summary>
         /// Uses service locator to find a ViewModel instance
         /// </summary>
-        /// <typeparam name="TViewModel"> Type of ViewModel </typeparam>
-        /// <returns> The <see cref="TViewModel"/>. </returns>
+        /// <param name="viewModelType"> Type of ViewModel </param>
+        /// <returns> The ViewModel instance. </returns>
         public Task<object> GetInstanceAsync(Type viewModelType)
         {
             return Task.FromResult(ServiceLocator.Current.GetInstance(viewModelType));

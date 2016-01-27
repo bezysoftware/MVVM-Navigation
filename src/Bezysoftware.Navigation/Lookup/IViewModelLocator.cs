@@ -19,7 +19,7 @@
         /// Gets the type of ViewModel associated with the given viewType
         /// </summary>
         /// <param name="viewType"></param>
-        /// <returns></returns>
+        /// <returns> Associated ViewModel type to given View type. </returns>
         Type GetAssociatedViewModelType(Type viewType);
     }
 }

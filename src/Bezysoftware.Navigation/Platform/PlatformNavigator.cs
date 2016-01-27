@@ -153,6 +153,8 @@
         /// <param name="allViewTypes"> Types of all views. Not all of them need to be in the seralized navigation state due to navigation interception. </param>
         public void RestoreNavigationState(string state, IEnumerable<Type> allViewTypes)
         {
+            var viewTypesList = allViewTypes.ToList();
+
             this.GetFrame().SetNavigationState(state);
 
             // unhook any existing interceptors
@@ -165,10 +167,10 @@
             }
 
             this.interceptedViewTypes.Clear();
-            this.interceptedViewTypes.AddRange(allViewTypes);
+            this.interceptedViewTypes.AddRange(viewTypesList);
 
             // now hook up the interceptors with all views
-            foreach (var viewType in allViewTypes)
+            foreach (var viewType in viewTypesList)
             {
                 foreach (var interceptor in this.navigationInterceptors)
                 {

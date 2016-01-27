@@ -10,7 +10,7 @@
     /// </summary>
     public class ViewLocator : IViewLocator
     {
-        private readonly Dictionary<Type, Type> LookupCache;
+        private readonly Dictionary<Type, Type> lookupCache;
         private readonly IAssemblyResolver assemblyResolver;
 
         /// <summary>
@@ -20,7 +20,7 @@
         {
             this.assemblyResolver = assemblyResolver;
 
-            this.LookupCache = new Dictionary<Type, Type>();
+            this.lookupCache = new Dictionary<Type, Type>();
         }
 
         /// <summary>
@@ -30,26 +30,26 @@
         /// <returns> The <see cref="Uri"/> pointing to specific View </returns>
         public async virtual Task<Type> GetViewTypeAsync(Type viewModelType)
         {
-            if (!this.LookupCache.ContainsKey(viewModelType))
+            if (!this.lookupCache.ContainsKey(viewModelType))
             {
                 var assemblies = await this.assemblyResolver.GetAssembliesAsync();
                 var pairs = ReflectionUtils.GetTypesWithAttribute<AssociatedViewModelAttribute>(assemblies);
                 var t = pairs.FirstOrDefault(p => p.Value.ViewModel == viewModelType);
-                this.LookupCache.Add(viewModelType, t.Key);
+                this.lookupCache.Add(viewModelType, t.Key);
             }
 
-            return this.LookupCache[viewModelType];
+            return this.lookupCache[viewModelType];
         }
 
         /// <summary>
         /// Manually registers an association between a View and ViewModel
         /// </summary>        
-        /// <param name="vieModelType"> Type of ViewModel </typeparam>
-        /// <param name="viewType"> Type of View </typeparam>
+        /// <param name="viewModelType"> Type of ViewModel </param>
+        /// <param name="viewType"> Type of View </param>
         /// <returns> The <see cref="IViewLocator"/>. </returns>
         public IViewLocator RegisterAssociation(Type viewModelType, Type viewType)
         {
-            this.LookupCache.Add(viewModelType, viewType);
+            this.lookupCache.Add(viewModelType, viewType);
             return this;
         }
     }

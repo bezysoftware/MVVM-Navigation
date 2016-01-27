@@ -18,8 +18,8 @@
         /// <summary>
         /// Manually registers an association between a View and ViewModel
         /// </summary>        
-        /// <param name="vieModelType"> Type of ViewModel </typeparam>
-        /// <param name="viewType"> Type of View </typeparam>
+        /// <param name="viewModelType"> Type of ViewModel </param>
+        /// <param name="viewType"> Type of View </param>
         /// <returns> The <see cref="IViewLocator"/>. </returns>
         IViewLocator RegisterAssociation(Type viewModelType, Type viewType);
     }

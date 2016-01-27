@@ -21,14 +21,14 @@
         /// <summary>
         /// Navigate to a given ViewModel passing some data to it.
         /// </summary>
+        /// <param name="viewModelType"> Type of the ViewModel to navigate to. </param>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
-        /// <param name="viewModelType"> Target ViewModel type. </typeparam>
         Task<bool> NavigateAsync(Type viewModelType, object data);
 
         /// <summary>
         /// Navigate to a given ViewModel.
         /// </summary>
-        /// <param name="viewModelType"> Target ViewModel type. </typeparam>        
+        /// <param name="viewModelType"> Type of the ViewModel to navigate to. </param>
         Task<bool> NavigateAsync(Type viewModelType);
 
         /// <summary>

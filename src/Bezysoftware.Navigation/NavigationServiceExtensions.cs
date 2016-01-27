@@ -52,8 +52,8 @@
         /// <summary>
         /// Navigate to a given ViewModel passing some data to it. This is a convenience method in case you don't care when the navigation finishes. If you do, use <see cref="NavigateAsync{TViewModel, TData}(INavigationService, TData)"/>
         /// </summary>
+        /// <param name="viewModelType"> Type of the ViewModel to navigate to. </param>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
-        /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>        
         public static void Navigate(this INavigationService service, Type viewModelType, object data)
         {
             service.NavigateAsync(viewModelType, data);
@@ -62,7 +62,6 @@
         /// <summary>
         /// Navigate to a given ViewModel. This is a convenience method in case you don't care when the navigation finishes. If you do, use <see cref="NavigateAsync{TViewModel}(INavigationService)"/>
         /// </summary>
-        /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>
         public static void Navigate(this INavigationService service, Type viewModelType)
         {
             service.NavigateAsync(viewModelType);
@@ -80,7 +79,6 @@
         /// Return control back to the previous ViewModel with the specified result data. This is a convenience method in case you don't care when the navigation finishes. If you do, use GoBackAsync{TData}(TData). />
         /// </summary>
         /// <param name="result"> The result. </param>
-        /// <typeparam name="TData"> Type of the data to pass to previous ViewModel </typeparam>
         public static void GoBack(this INavigationService service, object result)
         {
             service.GoBackAsync(result);

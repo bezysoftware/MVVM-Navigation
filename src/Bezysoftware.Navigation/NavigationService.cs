@@ -34,7 +34,7 @@
         /// <param name="statePersistor"> The state persistor. </param>
         /// <param name="viewModelLocator"> The ViewModel instance locator. </param>
         /// <param name="viewLocator"> The ViewLocator</param>
-        /// <param name="uiTaskScheduler"> UI task scheduler. </param>
+        /// <param name="platformNavigator"> The platform navigator. </param>
         public NavigationService(
             IViewLocator viewLocator, 
             IViewModelLocator viewModelLocator, 
@@ -68,7 +68,7 @@
             var allViewTypes = await Task.WhenAll(states.Select(s => this.viewLocator.GetViewTypeAsync(s.ViewModelType)));
 
             // this should also cause navigating to the last View, so no need to navigate there manually
-            this.platformNavigator.RestoreNavigationState(statePersistor.NavigationPath, allViewTypes);
+            this.platformNavigator.RestoreNavigationState(this.statePersistor.NavigationPath, allViewTypes);
 
             foreach (var state in states.Where(s => s != null))
             {
@@ -146,7 +146,6 @@
         /// Go back to the previous ViewModel and activate it with specified result data.
         /// </summary>
         /// <param name="data"> The result. </param>
-        /// <typeparam name="TData"> Type of the data. </typeparam> 
         public async Task<bool> GoBackAsync(object data) 
         {
             return await this.GoBackAndActivateAsync(data);
@@ -168,6 +167,9 @@
             var viewType = await this.viewLocator.GetViewTypeAsync(viewModelType);
             var viewModel = await this.viewModelLocator.GetInstanceAsync(viewModelType);
 
+            var currentViewModel = this.ActiveViewModelType;
+            var currentView = currentViewModel != null ? await this.viewLocator.GetViewTypeAsync(currentViewModel) : null;
+
             // activating the ViewModel instance
             if (parameters.DeactivationData == null)
             {
@@ -187,7 +189,7 @@
             this.ActiveViewModelType = viewModelType;
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, viewModelType, viewType, parameters.DeactivationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Forward, currentViewModel, currentView, viewModelType, viewType, parameters.DeactivationData));
 
             // activate the ViewModel instance
             if (parameters.DeactivationData == null)
@@ -233,7 +235,7 @@
             this.ActiveViewModelType = nextState.ViewModelType;
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, nextState.ViewModelType, viewType, parameters.DeactivationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, lastViewType, lastState.ViewModelType, nextState.ViewModelType, viewType, parameters.DeactivationData));
 
             // activate the ViewModel instance
             if (parameters.DeactivationData == null)

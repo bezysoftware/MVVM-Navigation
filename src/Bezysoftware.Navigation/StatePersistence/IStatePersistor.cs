@@ -16,7 +16,9 @@
         /// <summary>
         /// Pushes the given state into storage. 
         /// </summary>
-        /// <param name="state"> The state data. </param>
+        /// <param name="viewModel"> The ViewModel that the state belongs to. </param>
+        /// <param name="activationData"> Data the ViewModel was activated with. </param>
+        /// <param name="navigationState"> The state of platform navigation. </param>
         Task PushStateAsync(object viewModel, object activationData, string navigationState);
 
         /// <summary>
