@@ -15,7 +15,7 @@
         /// <param name="data"> The data to be passed to target ViewModel. </param>
         /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>
         /// <typeparam name="TData"> Type of data to be passed to target ViewModel </typeparam>        
-        public static Task<bool> NavigateAsync<TViewModel, TData>(this INavigationService service, TData data) where TViewModel : IActivate<TData>
+        public static Task<bool> NavigateAsync<TViewModel, TData>(this INavigationService service, TData data) 
         {
             return service.NavigateAsync(typeof(TViewModel), data);
         }
