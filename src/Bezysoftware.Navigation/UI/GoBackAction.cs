@@ -33,11 +33,11 @@
             
             if (this.DeactivationData == null)
             {
-                service.GoBack();
+                service.GoBackAsync();
             }
             else
             {
-                service.GoBack(this.DeactivationData);
+                service.GoBackAsync(this.DeactivationData);
             }
 
             return true;

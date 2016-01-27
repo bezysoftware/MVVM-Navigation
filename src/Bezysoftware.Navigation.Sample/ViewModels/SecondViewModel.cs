@@ -19,7 +19,7 @@
             this.nav = nav;
 
             this.Items = new ObservableCollection<Item>();
-            this.NavigateCommand = new RelayCommand<Item>(g => this.nav.Navigate<ThirdViewModel, Item>(g));
+            this.NavigateCommand = new RelayCommand<Item>(g => this.nav.NavigateAsync<ThirdViewModel, Item>(g));
         }
 
         public RelayCommand<Item> NavigateCommand

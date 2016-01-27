@@ -42,11 +42,11 @@
         
             if (this.ActivationData == null)
             {
-                service.GoBack();
+                service.GoBackAsync();
             }
             else
             {
-                service.GoBack(this.ActivationData);
+                service.GoBackAsync(this.ActivationData);
             }
         }
 

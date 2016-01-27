@@ -51,11 +51,11 @@
 
             if (this.ActivationData == null)
             {
-                service.Navigate(viewModelType);
+                service.NavigateAsync(viewModelType);
             }
             else
             {
-                service.Navigate(viewModelType, this.ActivationData);
+                service.NavigateAsync(viewModelType, this.ActivationData);
             }
 
             return true;
