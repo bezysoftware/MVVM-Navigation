@@ -235,7 +235,7 @@
             this.ActiveViewModelType = nextState.ViewModelType;
 
             // raise navigated event
-            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, lastViewType, lastState.ViewModelType, nextState.ViewModelType, viewType, parameters.DeactivationData));
+            this.Navigated?.Invoke(this, new NavigationEventArgs(NavigationType.Backward, lastState.ViewModelType, lastViewType, nextState.ViewModelType, viewType, parameters.DeactivationData));
 
             // activate the ViewModel instance
             if (parameters.DeactivationData == null)
