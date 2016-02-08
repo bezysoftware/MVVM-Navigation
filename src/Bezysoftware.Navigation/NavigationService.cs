@@ -240,11 +240,11 @@
             // activate the ViewModel instance
             if (parameters.DeactivationData == null)
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward);
             }
             else
             {
-                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Forward, parameters.DeactivationData);
+                ViewModelActivator.ActivateViewModel(viewModel, NavigationType.Backward, parameters.DeactivationData);
             }
 
             return true;
