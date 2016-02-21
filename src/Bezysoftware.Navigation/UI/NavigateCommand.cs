@@ -8,9 +8,9 @@
 
     public class NavigateCommand : DependencyObject, ICommand
     {
-        public static readonly DependencyProperty TargetViewTypeProperty = DependencyProperty.Register("TargetViewType", typeof(Type), typeof(NavigateToViewAction), new PropertyMetadata(null));
-        public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateToViewAction), new PropertyMetadata(null));
-        public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateToViewAction), new PropertyMetadata(null));
+        public static readonly DependencyProperty TargetViewTypeProperty = DependencyProperty.Register("TargetViewType", typeof(Type), typeof(NavigateCommand), new PropertyMetadata(null));
+        public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateCommand), new PropertyMetadata(null));
+        public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateCommand), new PropertyMetadata(null));
 
         public event EventHandler CanExecuteChanged;
 
@@ -46,18 +46,18 @@
             return true;
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
             var service = this.GetNavigationService();
             var viewModelType = this.GetViewModelType();
 
             if (this.ActivationData == null)
             {
-                service.NavigateAsync(viewModelType);
+                await service.NavigateAsync(viewModelType);
             }
             else
             {
-                service.NavigateAsync(viewModelType, this.ActivationData);
+                await service.NavigateAsync(viewModelType, this.ActivationData);
             }
         }
 
