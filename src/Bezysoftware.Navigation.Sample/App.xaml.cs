@@ -7,6 +7,7 @@
     using System;
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Activation;
+    using Windows.UI.Popups;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
@@ -24,6 +25,12 @@
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += this.OnUnhandledException;
+        }
+
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            await new MessageDialog(e.Exception.ToString()).ShowAsync();
         }
 
         /// <summary>
@@ -66,7 +73,7 @@
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                ServiceLocator.Current.GetInstance<INavigationService>().Navigate<MainViewModel>();
+                ServiceLocator.Current.GetInstance<INavigationService>().NavigateAsync<MainViewModel>();
             }
             // Ensure the current window is active
             Window.Current.Activate();

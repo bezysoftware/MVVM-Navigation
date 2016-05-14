@@ -9,6 +9,7 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -44,6 +45,13 @@ namespace Bezysoftware.Navigation.Sample.ViewModels
 
             // manually register association for the main page to speed up application startup
             unity.Resolve<IViewLocator>().RegisterAssociation<MainViewModel, MainPage>();
+
+            ServiceLocator.Current.GetInstance<INavigationService>().Navigated += ViewModelLocator_Navigated;
+        }
+
+        private static void ViewModelLocator_Navigated(object sender, NavigationEventArgs e)
+        {
+            Debug.WriteLine(e.OriginalViewModelType);
         }
 
         public static void Init()
