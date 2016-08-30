@@ -23,12 +23,14 @@
         /// </summary>
         /// <param name="viewModelType"> Type of the ViewModel to navigate to. </param>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
+        /// <param name="isRoot"> Specifies if the target view should be set as the origin of navigation. </param>
         Task<bool> NavigateAsync(Type viewModelType, object data, bool isRoot = false);
 
         /// <summary>
         /// Navigate to a given ViewModel.
         /// </summary>
         /// <param name="viewModelType"> Type of the ViewModel to navigate to. </param>
+        /// <param name="isRoot"> Specifies if the target view should be set as the origin of navigation. </param>
         Task<bool> NavigateAsync(Type viewModelType, bool isRoot = false);
 
         /// <summary>

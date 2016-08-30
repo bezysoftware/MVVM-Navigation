@@ -13,20 +13,22 @@
         /// Navigate to a given ViewModel passing some data to it 
         /// </summary>
         /// <param name="data"> The data to be passed to target ViewModel. </param>
+        /// <param name="isRoot"> Specifies if the target view should be set as the origin of navigation. </param>
         /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>
         /// <typeparam name="TData"> Type of data to be passed to target ViewModel </typeparam>        
-        public static Task<bool> NavigateAsync<TViewModel, TData>(this INavigationService service, TData data) 
+        public static Task<bool> NavigateAsync<TViewModel, TData>(this INavigationService service, TData data, bool isRoot = false) 
         {
-            return service.NavigateAsync(typeof(TViewModel), data);
+            return service.NavigateAsync(typeof(TViewModel), data, isRoot);
         }
 
         /// <summary>
         /// Navigate to a given ViewModel
         /// </summary>
+        /// <param name="isRoot"> Specifies if the target view should be set as the origin of navigation. </param>
         /// <typeparam name="TViewModel"> Target ViewModel type </typeparam>
-        public static Task<bool> NavigateAsync<TViewModel>(this INavigationService service)
+        public static Task<bool> NavigateAsync<TViewModel>(this INavigationService service, bool isRoot = false)
         {
-            return service.NavigateAsync(typeof(TViewModel));
+            return service.NavigateAsync(typeof(TViewModel), isRoot);
         }
 
         /// <summary>
