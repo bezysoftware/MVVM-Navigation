@@ -16,6 +16,7 @@
         public static readonly DependencyProperty TargetViewTypeProperty = DependencyProperty.Register("TargetViewType", typeof(Type), typeof(NavigateToViewAction), new PropertyMetadata(null));
         public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateToViewAction), new PropertyMetadata(null));
         public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateToViewAction), new PropertyMetadata(null));
+        public static readonly DependencyProperty IsRootProperty = DependencyProperty.Register("IsRoot", typeof(bool), typeof(NavigateToViewAction), new PropertyMetadata(false));
 
         /// <summary>
         /// The navigation service. If not provided, the instance is resolved using <see cref="ServiceLocator"/>.
@@ -44,6 +45,15 @@
             set { this.SetValue(TargetViewTypeProperty, value); }
         }
 
+        /// <summary>
+        /// Specifies if the target view should be set as the origin of navigation.
+        /// </summary>
+        public bool IsRoot
+        {
+            get { return (bool)GetValue(IsRootProperty); }
+            set { SetValue(IsRootProperty, value); }
+        }
+        
         public object Execute(object sender, object parameter)
         {
             var service = this.GetNavigationService();
@@ -51,11 +61,11 @@
 
             if (this.ActivationData == null)
             {
-                service.NavigateAsync(viewModelType);
+                service.NavigateAsync(viewModelType, this.IsRoot);
             }
             else
             {
-                service.NavigateAsync(viewModelType, this.ActivationData);
+                service.NavigateAsync(viewModelType, this.ActivationData, this.IsRoot);
             }
 
             return true;

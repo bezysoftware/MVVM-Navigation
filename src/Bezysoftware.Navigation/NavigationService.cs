@@ -120,14 +120,14 @@
 
         #region Navigate
 
-        public async Task<bool> NavigateAsync(Type viewModelType, object data)
+        public async Task<bool> NavigateAsync(Type viewModelType, object data, bool isRoot = false)
         {
-            return await this.NavigateAndActivateAsync(viewModelType, data);
+            return await this.NavigateAndActivateAsync(viewModelType, data, isRoot);
         }
 
-        public async Task<bool> NavigateAsync(Type viewModelType)
+        public async Task<bool> NavigateAsync(Type viewModelType, bool isRoot = false)
         {
-            return await this.NavigateAndActivateAsync(viewModelType, null);
+            return await this.NavigateAndActivateAsync(viewModelType, null, isRoot);
         }
 
         #endregion
@@ -155,11 +155,11 @@
 
         #region Private methods
 
-        private async Task<bool> NavigateAndActivateAsync(Type viewModelType, object activationData)
+        private async Task<bool> NavigateAndActivateAsync(Type viewModelType, object activationData, bool isRoot)
         {
             var parameters = new DeactivationParameters(viewModelType, activationData);
 
-            if (!await this.DeactivatePreviousViewModelsAsync(NavigationType.Forward, viewModelType, parameters))
+            if (!await this.DeactivatePreviousViewModelsAsync(NavigationType.Forward, viewModelType, parameters, isRoot))
             {
                 return false;
             }
@@ -209,7 +209,7 @@
             var nextState = (await this.statePersistor.GetAllStatesAsync()).Select(s => s).Reverse().Skip(1).First();
             var parameters = new DeactivationParameters(nextState.ViewModelType, deactivationData);
 
-            if (! await this.DeactivatePreviousViewModelsAsync(NavigationType.Backward, null, parameters))
+            if (! await this.DeactivatePreviousViewModelsAsync(NavigationType.Backward, null, parameters, false))
             {
                 return false;
             }
@@ -250,7 +250,7 @@
             return true;
         }
 
-        private async Task<bool> DeactivatePreviousViewModelsAsync(NavigationType navigationType, Type newViewModelTypeOverride, DeactivationParameters parameters)
+        private async Task<bool> DeactivatePreviousViewModelsAsync(NavigationType navigationType, Type newViewModelTypeOverride, DeactivationParameters parameters, bool rootNavigation)
         {
             IEnumerable<State> stack = await this.statePersistor.GetAllStatesAsync();
             bool navigationTypeOverriden = false;
@@ -258,7 +258,7 @@
             if (stack.Any())
             {
                 var viewModelsToDeactivate = stack
-                    .SkipWhile(i => i.ViewModelType != newViewModelTypeOverride)
+                    .SkipWhile(i => !rootNavigation && i.ViewModelType != newViewModelTypeOverride)
                     .Select(i => i.ViewModelType)
                     .Reverse()
                     .ToList();

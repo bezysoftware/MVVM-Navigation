@@ -5,6 +5,7 @@
     xmlns:local="using:Bezysoftware.Navigation.Sample.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nav="using:Bezysoftware.Navigation.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
@@ -12,5 +13,12 @@
     <Grid DataContext="{Binding Third, Source={StaticResource Locator}}" Background="BlanchedAlmond">
         <TextBlock Text="{Binding Item.Content}" />
         <ProgressRing IsActive="{Binding IsWorking}" />
+        <Button Content="Go to different page" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button.Command>
+                <nav:NavigateCommand 
+                    IsRoot="true"
+                    TargetViewType="local:DifferentPage" />
+            </Button.Command>
+        </Button>
     </Grid>
 </UserControl>

@@ -11,6 +11,7 @@
         public static readonly DependencyProperty TargetViewTypeProperty = DependencyProperty.Register("TargetViewType", typeof(Type), typeof(NavigateCommand), new PropertyMetadata(null));
         public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateCommand), new PropertyMetadata(null));
         public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateCommand), new PropertyMetadata(null));
+        public static readonly DependencyProperty IsRootProperty = DependencyProperty.Register("IsRoot", typeof(bool), typeof(NavigateCommand), new PropertyMetadata(false));
 
         public event EventHandler CanExecuteChanged;
 
@@ -40,7 +41,16 @@
             get { return (Type)this.GetValue(TargetViewTypeProperty); }
             set { this.SetValue(TargetViewTypeProperty, value); }
         }
-
+        
+        /// <summary>
+        /// Specifies if the target view should be set as the origin of navigation.
+        /// </summary>
+        public bool IsRoot
+        {
+            get { return (bool)GetValue(IsRootProperty); }
+            set { SetValue(IsRootProperty, value); }
+        }
+        
         public bool CanExecute(object parameter)
         {
             return true;
@@ -53,11 +63,11 @@
 
             if (this.ActivationData == null)
             {
-                await service.NavigateAsync(viewModelType);
+                await service.NavigateAsync(viewModelType, this.IsRoot);
             }
             else
             {
-                await service.NavigateAsync(viewModelType, this.ActivationData);
+                await service.NavigateAsync(viewModelType, this.ActivationData, this.IsRoot);
             }
         }
 
