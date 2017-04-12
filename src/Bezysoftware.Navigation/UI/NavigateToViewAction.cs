@@ -17,7 +17,17 @@
         public static readonly DependencyProperty ActivationDataProperty = DependencyProperty.Register("ActivationData", typeof(object), typeof(NavigateToViewAction), new PropertyMetadata(null));
         public static readonly DependencyProperty NavigationServiceProperty = DependencyProperty.Register("NavigationService", typeof(INavigationService), typeof(NavigateToViewAction), new PropertyMetadata(null));
         public static readonly DependencyProperty IsRootProperty = DependencyProperty.Register("IsRoot", typeof(bool), typeof(NavigateToViewAction), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register("IsEnabled", typeof(bool), typeof(NavigateToViewAction), new PropertyMetadata(true));
 
+        /// <summary>
+        /// Gets or sets whether navigation is enabled.
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return (bool)this.GetValue(IsEnabledProperty); }
+            set { this.SetValue(IsEnabledProperty, value); }
+        }
+        
         /// <summary>
         /// The navigation service. If not provided, the instance is resolved using <see cref="ServiceLocator"/>.
         /// </summary>
@@ -56,6 +66,11 @@
         
         public object Execute(object sender, object parameter)
         {
+            if (!this.IsEnabled)
+            {
+                return false;
+            }
+
             var service = this.GetNavigationService();
             var viewModelType = this.GetViewModelType();
 
