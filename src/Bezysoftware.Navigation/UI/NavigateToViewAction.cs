@@ -3,7 +3,7 @@
     using System;
     using Microsoft.Xaml.Interactivity;
     using Windows.UI.Xaml;
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
     using Bezysoftware.Navigation.Lookup;
 
 

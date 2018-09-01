@@ -1,7 +1,7 @@
 ﻿namespace Bezysoftware.Navigation.UI
 {
     using Microsoft.Xaml.Interactivity;
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
     using Windows.UI.Xaml;
 
     public class GoBackAction : DependencyObject, IAction

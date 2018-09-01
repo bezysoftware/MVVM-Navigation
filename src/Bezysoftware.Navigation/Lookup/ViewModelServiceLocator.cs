@@ -1,6 +1,6 @@
 ﻿namespace Bezysoftware.Navigation.Lookup
 {
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
     using System;
     using System.Reflection;
     using System.Threading.Tasks;

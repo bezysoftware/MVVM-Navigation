@@ -1,7 +1,7 @@
 ﻿namespace Bezysoftware.Navigation.UI
 {
     using Lookup;
-    using Microsoft.Practices.ServiceLocation;
+    using CommonServiceLocator;
     using System;
     using System.Windows.Input;
     using Windows.UI.Xaml;
